@@ -1,0 +1,1 @@
+<img src="{{ asset('assets/img/crowdfunding/logo.png') }}" height="100%" width="75%">
