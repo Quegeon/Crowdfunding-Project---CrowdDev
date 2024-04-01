@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\pages\admin\management;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class ManageAdmin extends Controller
 {
@@ -16,15 +19,46 @@ class ManageAdmin extends Controller
 
     public function index()
     {
-        return view('content.pages.admin.management.admin.index-admin');
+        $admin = Admin::all();
+        return view('content.pages.admin.management.admin.index-admin', compact(['admin']));
     }
 
     public function store()
     {
-        $validated = $this->request->validate([
+        $validator = Validator::make($this->request->all(), [
             'name' => 'required|string|max:255|regex:/^[a-zA-Zs]+$/',
-            'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
-            
+            'username' => 'required|string|max:30|min:6|unique:admins,username|regex:/^[a-zA-Z0-9 ]+$/',
+            'password' => 'required|string|max:20|min:8|regex:/^[a-zA-Z0-9 ]+$/',
+            'email' => 'required|string|email|max:50'
         ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        try {
+            $admin = new Admin([
+                'id' => Str::orderedUuid(),
+                'name' => $validated['name'],
+                'username' => $validated['username'],
+                'password' => bcrypt($validated['password']),
+                'encrypt_view' => encrypt($validated['password']),
+                'email' => $validated['email']
+            ]);
+
+            $admin->save();
+
+            return back()
+                ->with('success','Successfully Add Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+
     }
 }

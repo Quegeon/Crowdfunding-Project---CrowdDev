@@ -22,8 +22,6 @@
   ])
 @endsection
 
-
-
 @section('content')
 <style>
     .dropdown-item:hover {
@@ -36,12 +34,7 @@
   <span class="text-muted fw-light">Management /</span> Admin
 </h4>
 
-@if (session('alert'))
-  <div class="alert alert-{{ session('alert.status') }} alert-dismissible" role="alert">
-    {{ session('alert.message') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-@endif
+@include('_partials.alert')
 
 <div class="card">
   <div class="d-flex justify-content-between">
@@ -62,21 +55,24 @@
         </tr>
       </thead>
       <tbody class="table-border-bottom-0">
-        <tr>
-          <td>1</td>
-          <td>Albert Cook</td>
-          <td>Albert123</td>
-          <td>superadmin@crowddev.net</td>
-          <td>
-            <div class="d-flex dropdown justify-content-center">
-              <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-pencil me-1"></i> Edit</a>
-                <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-trash me-1"></i> Delete</a>
-                <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-key me-1"></i> Change Password</a>
+        @foreach ($admin as $a)
+          <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $a->name }}</td>
+            <td>{{ $a->username }}</td>
+            <td>{{ $a->email }}</td>
+            <td>
+              <div class="d-flex dropdown justify-content-center">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-pencil me-1"></i> Edit</a>
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-trash me-1"></i> Delete</a>
+                  <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-key me-1"></i> Change Password</a>
+                </div>
               </div>
-            </div>
-          </td>
+            </td>
+          </tr>
+        @endforeach
       </tbody>
     </table>
   </div>
