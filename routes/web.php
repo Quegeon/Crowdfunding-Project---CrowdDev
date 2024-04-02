@@ -31,7 +31,8 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
         Route::prefix('admin')->controller(M_Admin::class)->group(function(){
             Route::get('/', 'index')->name('management.admin.index');
             Route::post('/store', 'store')->name('management.admin.store');
-            Route::put('/update', 'update')->name('management.admin.update');
+            Route::get('/show/{id}', 'show')->name('management.admin.show');
+            Route::put('/update/{id}', 'update')->name('management.admin.update');
             Route::delete('/destroy', 'destroy')->name('management.admin.destroy');
         });
         // M_User

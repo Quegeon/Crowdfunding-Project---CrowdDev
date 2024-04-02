@@ -13,12 +13,14 @@
     'resources/assets/vendor/libs/@form-validation/popular.js',
     'resources/assets/vendor/libs/@form-validation/bootstrap5.js',
     'resources/assets/vendor/libs/@form-validation/auto-focus.js',
+    'resources/assets/vendor/libs/jquery/jquery.js'
   ])
 @endsection
 
 @section('page-script')
   @vite([
-    'resources/assets/js/crowdfund/modal-add-admin.js'
+    'resources/assets/js/admin/modal-add-admin.js',
+    'resources/assets/js/admin/general-admin.js'
   ])
 @endsection
 
@@ -65,7 +67,7 @@
               <div class="d-flex dropdown justify-content-center">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                 <div class="dropdown-menu">
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-pencil me-1"></i> Edit</a>
+                  <button type="button" class="dropdown-item btn-edit" data-id="{{ $a->id }}"><i class="ti ti-pencil me-1"></i> Edit</button>
                   <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-trash me-1"></i> Delete</a>
                   <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-key me-1"></i> Change Password</a>
                 </div>
@@ -79,5 +81,6 @@
 </div>
 
 @include('content.pages.admin.management.admin.component.modal-add-admin')
+@include('content.pages.admin.management.admin.component.modal-edit-admin')
 
 @endsection

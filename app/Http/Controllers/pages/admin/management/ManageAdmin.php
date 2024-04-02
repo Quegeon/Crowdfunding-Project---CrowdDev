@@ -61,4 +61,55 @@ class ManageAdmin extends Controller
         }
 
     }
+
+    public function show($id)
+    {
+        $admin = Admin::findOrFail($id);
+        $render = view('content.pages.admin.management.admin.component.content-edit', compact(['admin']));
+        return response(['data' => $render->render()]);
+    }
+
+    public function update($id)
+    {
+        $admin = Admin::findOrFail($id);
+
+        if ($admin->username === $this->request->username) {
+            $validator = Validator::make($this->request->all(), [
+                'name' => 'required|string|max:255|regex:/^[a-zA-Zs]+$/',
+                'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
+                'email' => 'required|string|email|max:50'
+            ]);
+
+        } else {
+            $validator = Validator::make($this->request->all(), [
+                'name' => 'required|string|max:255|regex:/^[a-zA-Zs]+$/',
+                'username' => 'required|string|max:30|min:6|unique:admins,username|regex:/^[a-zA-Z0-9 ]+$/',
+                'email' => 'required|string|email|max:50'
+            ]);
+        }
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator);
+        }
+
+        $validated = $validator->validated();
+
+        try {
+            $admin->update([
+                'name' => $validated['name'],
+                'username' => $validated['username'],
+                'email' => $validated['email']
+            ]);
+
+            $admin->save();
+
+            return back()
+                ->with('success','Successfully Add Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e);
+        }
+    }
 }
