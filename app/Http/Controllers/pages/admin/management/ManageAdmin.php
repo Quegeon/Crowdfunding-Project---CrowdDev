@@ -112,4 +112,20 @@ class ManageAdmin extends Controller
                 ->withErrors($e);
         }
     }
+
+    public function destroy($id)
+    {
+        $admin = Admin::findOrFail($id);
+
+        try {
+            $admin->delete();
+
+            return back()
+                ->with('success', 'Successfully Delete Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e);
+        }
+    }
 }

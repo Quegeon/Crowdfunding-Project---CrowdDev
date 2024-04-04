@@ -5,6 +5,7 @@
 @section('vendor-style')
   @vite([
     'resources/assets/vendor/libs/@form-validation/form-validation.scss',
+    'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'
   ])
 @endsection
 
@@ -13,7 +14,8 @@
     'resources/assets/vendor/libs/@form-validation/popular.js',
     'resources/assets/vendor/libs/@form-validation/bootstrap5.js',
     'resources/assets/vendor/libs/@form-validation/auto-focus.js',
-    'resources/assets/vendor/libs/jquery/jquery.js'
+    'resources/assets/vendor/libs/jquery/jquery.js',
+    'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'
   ])
 @endsection
 
@@ -67,8 +69,8 @@
               <div class="d-flex dropdown justify-content-center">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                 <div class="dropdown-menu">
-                  <button type="button" class="dropdown-item btn-edit" data-id="{{ $a->id }}"><i class="ti ti-pencil me-1"></i> Edit</button>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-trash me-1"></i> Delete</a>
+                  <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.admin.show', $a->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
+                  <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.admin.destroy', $a->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
                   <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-key me-1"></i> Change Password</a>
                 </div>
               </div>

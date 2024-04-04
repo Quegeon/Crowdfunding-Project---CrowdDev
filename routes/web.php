@@ -33,14 +33,14 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
             Route::post('/store', 'store')->name('management.admin.store');
             Route::get('/show/{id}', 'show')->name('management.admin.show');
             Route::put('/update/{id}', 'update')->name('management.admin.update');
-            Route::delete('/destroy', 'destroy')->name('management.admin.destroy');
+            Route::get('/destroy/{id}', 'destroy')->name('management.admin.destroy');
         });
         // M_User
         Route::prefix('user')->controller(M_User::class)->group(function(){
             Route::get('/', 'index')->name('management.user.index');
             Route::post('/store', 'store')->name('management.user.store');
             Route::put('/update', 'update')->name('management.user.update');
-            Route::delete('/destroy', 'destroy')->name('management.user.destroy');
+            Route::get('/destroy', 'destroy')->name('management.user.destroy');
         });
     });
 
