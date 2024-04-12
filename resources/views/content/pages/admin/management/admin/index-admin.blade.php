@@ -71,7 +71,7 @@
                 <div class="dropdown-menu">
                   <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.admin.show', $a->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
                   <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.admin.destroy', $a->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
-                  <a class="dropdown-item" href="javascript:void(0);"><i class="ti ti-key me-1"></i> Change Password</a>
+                  <button type="button" class="dropdown-item btn-change-password" data-href="{{ route('management.admin.show.password', $a->id) }}"><i class="ti ti-key me-1"></i> Change Password</button>
                 </div>
               </div>
             </td>
@@ -84,5 +84,6 @@
 
 @include('content.pages.admin.management.admin.component.modal-add-admin')
 @include('content.pages.admin.management.admin.component.modal-edit-admin')
+@include('content.pages.admin.management.admin.component.modal-change-password-admin')
 
 @endsection

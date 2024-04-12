@@ -34,6 +34,9 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
             Route::get('/show/{id}', 'show')->name('management.admin.show');
             Route::put('/update/{id}', 'update')->name('management.admin.update');
             Route::get('/destroy/{id}', 'destroy')->name('management.admin.destroy');
+            Route::get('/show/password/{id}', 'show_password')->name('management.admin.show.password');
+            Route::get('/visibility/password/{id}', 'visibility_password')->name('management.admin.visibility.password');
+            Route::put('/update/password/{id}', 'update_password')->name('management.admin.update.password');
         });
         // M_User
         Route::prefix('user')->controller(M_User::class)->group(function(){

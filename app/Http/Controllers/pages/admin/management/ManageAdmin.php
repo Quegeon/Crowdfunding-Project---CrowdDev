@@ -19,7 +19,7 @@ class ManageAdmin extends Controller
 
     public function index()
     {
-        $admin = Admin::all();
+        $admin = Admin::select('id','name','username','email')->get();
         return view('content.pages.admin.management.admin.index-admin', compact(['admin']));
     }
 
@@ -65,8 +65,9 @@ class ManageAdmin extends Controller
     public function show($id)
     {
         $admin = Admin::findOrFail($id);
+        $admin->makeHidden(['password', 'encrypt_view', 'created_at', 'updated_at']);
         $render = view('content.pages.admin.management.admin.component.content-edit', compact(['admin']));
-        return response(['data' => $render->render()]);
+        return response()->json(['data' => $render->render()]);
     }
 
     public function update($id)
@@ -122,6 +123,55 @@ class ManageAdmin extends Controller
 
             return back()
                 ->with('success', 'Successfully Delete Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e);
+        }
+    }
+
+    public function show_password($id)
+    {
+        $admin = Admin::findOrFail($id);
+        $dataId = $admin->id;
+
+        $render = view('content.pages.admin.management.admin.component.content-change-password', compact('dataId'));
+        return response()->json(['data' => $render->render()]);
+    }
+
+    public function visibility_password($id)
+    {
+        $admin = Admin::findOrFail($id);
+        $decrypt = decrypt($admin->encrypt_view);
+
+        return response()->json(['data' => $decrypt]);
+    }
+
+    public function update_password($id)
+    {
+        $admin = Admin::findOrFail($id);
+
+        $validator = Validator::make($this->request->all(), [
+            'new_password' => 'required|string|max:20|min:8|regex:/^[a-zA-Z0-9 ]+$/'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator);
+        };
+
+        $validated = $validator->validated();
+
+        try {
+            $admin->update([
+                'password' => bcrypt($validated['new_password']),
+                'encrypt_view' => encrypt($validated['new_password'])
+            ]);
+            
+            $admin->save();
+
+            return back()
+                ->with('success', 'Successfully Change Password');
 
         } catch (\Exception $e) {
             return back()
