@@ -24,5 +24,5 @@
 </form>
 
 @vite([
-  'resources/assets/js/admin/modal-edit-admin.js'
+  'resources/assets/js/admin/manage-admin/modal-edit-admin.js'
 ])

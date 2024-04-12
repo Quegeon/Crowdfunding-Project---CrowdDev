@@ -21,8 +21,8 @@
 
 @section('page-script')
   @vite([
-    'resources/assets/js/admin/modal-add-admin.js',
-    'resources/assets/js/admin/general-admin.js'
+    'resources/assets/js/admin/manage-admin/modal-add-admin.js',
+    'resources/assets/js/admin/manage-admin/general-admin.js'
   ])
 @endsection
 

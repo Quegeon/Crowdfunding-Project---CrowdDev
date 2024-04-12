@@ -42,8 +42,12 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
         Route::prefix('user')->controller(M_User::class)->group(function(){
             Route::get('/', 'index')->name('management.user.index');
             Route::post('/store', 'store')->name('management.user.store');
-            Route::put('/update', 'update')->name('management.user.update');
-            Route::get('/destroy', 'destroy')->name('management.user.destroy');
+            Route::get('/show/{id}', 'show')->name('management.user.show');
+            Route::put('/update/{id}', 'update')->name('management.user.update');
+            Route::get('/destroy/{id}', 'destroy')->name('management.user.destroy');
+            Route::get('/show/password/{id}', 'show_password')->name('management.user.show.password');
+            Route::get('/visibility/password/{id}', 'visibility_password')->name('management.user.visibility.password');
+            Route::put('/update/password/{id}', 'update_password')->name('management.user.update.password');
         });
     });
 

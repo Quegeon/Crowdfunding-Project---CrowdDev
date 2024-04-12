@@ -24,10 +24,10 @@
     </div>
 </form>
 
-@vite('resources/assets/js/admin/modal-change-password.js')
+@vite('resources/assets/js/admin/manage-admin/modal-change-password.js')
 
-{{-- <script> --}}
-    {{-- FormValidation.formValidation(document.getElementById('changeAdminPasswordForm'), {
+<script>
+    FormValidation.formValidation(document.getElementById('changeAdminPasswordForm'), {
     fields: {
       new_password: {
         validators: {
@@ -56,5 +56,5 @@
       submitButton: new FormValidation.plugins.SubmitButton(),
       defaultSubmit: new FormValidation.plugins.DefaultSubmit()
     }
-  }); --}}
-{{-- </script> --}}
+  });
+</script>

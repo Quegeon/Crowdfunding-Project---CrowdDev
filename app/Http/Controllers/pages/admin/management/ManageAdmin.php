@@ -110,7 +110,7 @@ class ManageAdmin extends Controller
 
         } catch (\Exception $e) {
             return back()
-                ->withErrors($e);
+                ->withErrors($e->getMessage());
         }
     }
 
@@ -126,7 +126,7 @@ class ManageAdmin extends Controller
 
         } catch (\Exception $e) {
             return back()
-                ->withErrors($e);
+                ->withErrors($e->getMessage());
         }
     }
 
@@ -175,7 +175,7 @@ class ManageAdmin extends Controller
 
         } catch (\Exception $e) {
             return back()
-                ->withErrors($e);
+                ->withErrors($e->getMessage());
         }
     }
 }
