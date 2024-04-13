@@ -117,4 +117,20 @@ class ManageUser extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+
+        try {
+            $user->delete();
+
+            return back()
+                ->with('success', 'Successfully Delete Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }

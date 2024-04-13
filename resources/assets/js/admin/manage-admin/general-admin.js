@@ -24,7 +24,7 @@ $('.btn-delete').on('click', function(e) {
             window.location.href = $(this).data('href');
         }
     });
-})
+});
 
 $('.btn-change-password').on('click', function() {
     $.ajax({
