@@ -62,4 +62,59 @@ class ManageUser extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        $user->makeHidden(['password', 'encrypt_view', 'payment_credential', 'created_at', 'updated_at']);
+        $render = view('content.pages.admin.management.user.component.content-edit', compact('user'));
+        return response()->json(['data' => $render->render()]);
+    }
+
+    public function update($id)
+    {
+        $user = User::findOrFail($id);
+
+        if ($this->request->username == $user->username) {
+            $validator = Validator::make($this->request->all(), [
+                'name' => 'required|string|max:255|regex:/^[a-zA-Zs]+$/',
+                'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
+                'email' => 'required|string|email|max:50',
+                'payment_credential' => 'nullable|numeric|digits:6|regex:/^[0-9]+$/'
+            ]);
+
+        } else {
+            $validator = Validator::make($this->request->all(), [
+                'name' => 'required|string|max:255|regex:/^[a-zA-Zs]+$/',
+                'username' => 'required|string|max:30|min:6|unique:users,username|regex:/^[a-zA-Z0-9 ]+$/',
+                'email' => 'required|string|email|max:50',
+                'payment_credential' => 'nullable|numeric|digits:6|regex:/^[0-9]+$/'
+            ]);
+        }
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator);
+        }
+
+        $validated = $validator->validated();
+
+        try {
+            $user->update([
+                'name' => $validated['name'],
+                'username' => $validated['username'],
+                'email' => $validated['email'],
+                'payment_credential' => bcrypt($validated['payment_credential'])
+            ]);
+
+            $user->save();
+
+            return back()
+                ->with('success','Successfully Edit Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }

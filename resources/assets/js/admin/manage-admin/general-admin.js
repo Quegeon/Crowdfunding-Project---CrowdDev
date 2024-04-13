@@ -4,7 +4,7 @@ $('.btn-edit').on('click', function() {
         url: $(this).data('href'),
         method: 'GET',
         success: function(res) {
-            $('#content-edit').replaceWith(res.data);
+            $('#content-edit').html(res.data);
             $('#editAdmin').modal('show');
         },
         error: function(err) {

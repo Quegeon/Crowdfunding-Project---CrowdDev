@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('password');
             $table->string('encrypt_view');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->timestamps();
         });
     }

@@ -106,7 +106,7 @@ class ManageAdmin extends Controller
             $admin->save();
 
             return back()
-                ->with('success','Successfully Add Data');
+                ->with('success','Successfully Edit Data');
 
         } catch (\Exception $e) {
             return back()

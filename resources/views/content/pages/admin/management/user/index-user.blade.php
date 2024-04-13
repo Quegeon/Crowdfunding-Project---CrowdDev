@@ -21,7 +21,8 @@
 
 @section('page-script')
     @vite([
-        'resources/assets/js/admin/manage-user/modal-add-user.js'
+        'resources/assets/js/admin/manage-user/modal-add-user.js',
+        'resources/assets/js/admin/manage-user/general-user.js'
     ])
 @endsection
 
@@ -82,5 +83,6 @@
     </div>
 
     @include('content.pages.admin.management.user.component.modal-add-user')
+    @include('content.pages.admin.management.user.component.modal-edit-user')
 
 @endsection
