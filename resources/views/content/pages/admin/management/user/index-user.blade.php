@@ -84,5 +84,6 @@
 
     @include('content.pages.admin.management.user.component.modal-add-user')
     @include('content.pages.admin.management.user.component.modal-edit-user')
+    @include('content.pages.admin.management.user.component.modal-change-password-user')
 
 @endsection

@@ -64,8 +64,7 @@ class ManageAdmin extends Controller
 
     public function show($id)
     {
-        $admin = Admin::findOrFail($id);
-        $admin->makeHidden(['password', 'encrypt_view', 'created_at', 'updated_at']);
+        $admin = Admin::findOrFail($id, ['id','name','username','email']);
         $render = view('content.pages.admin.management.admin.component.content-edit', compact(['admin']));
         return response()->json(['data' => $render->render()]);
     }
@@ -132,18 +131,15 @@ class ManageAdmin extends Controller
 
     public function show_password($id)
     {
-        $admin = Admin::findOrFail($id);
-        $dataId = $admin->id;
-
+        $dataId = Admin::findOrFail($id, ['id']);
         $render = view('content.pages.admin.management.admin.component.content-change-password', compact('dataId'));
         return response()->json(['data' => $render->render()]);
     }
 
     public function visibility_password($id)
     {
-        $admin = Admin::findOrFail($id);
-        $decrypt = decrypt($admin->encrypt_view);
-
+        $encrypt = Admin::findOrFail($id, ['encrypt_view']);
+        $decrypt = decrypt($encrypt->encrypt_view);
         return response()->json(['data' => $decrypt]);
     }
 

@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('management.admin.update.password', $dataId) }}" id="changeAdminPasswordForm" class="row g-3" autocomplete="off">
+<form method="POST" action="{{ route('management.user.update.password', $dataId) }}" id="changeUserPasswordForm" class="row g-3" autocomplete="off">
     @csrf
     @method('PUT')
     <div class="col-12">
@@ -24,10 +24,10 @@
     </div>
 </form>
 
-@vite('resources/assets/js/admin/manage-admin/modal-change-password.js')
+@vite('resources/assets/js/admin/manage-user/modal-change-password.js')
 
 <script>
-    FormValidation.formValidation(document.getElementById('changeAdminPasswordForm'), {
+    FormValidation.formValidation(document.getElementById('changeUserPasswordForm'), {
     fields: {
       new_password: {
         validators: {

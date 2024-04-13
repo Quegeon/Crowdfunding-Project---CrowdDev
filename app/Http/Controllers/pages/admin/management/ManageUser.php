@@ -65,8 +65,7 @@ class ManageUser extends Controller
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
-        $user->makeHidden(['password', 'encrypt_view', 'payment_credential', 'created_at', 'updated_at']);
+        $user = User::findOrFail($id, ['id','name','username','email']);
         $render = view('content.pages.admin.management.user.component.content-edit', compact('user'));
         return response()->json(['data' => $render->render()]);
     }
@@ -131,6 +130,52 @@ class ManageUser extends Controller
         } catch (\Exception $e) {
             return back()
                 ->withErrors($e->getMessage());
+        }
+    }
+
+    public function show_password($id)
+    {
+        $dataId = User::findOrFail($id, ['id']);
+        $render = view('content.pages.admin.management.user.component.content-change-password', compact('dataId'));
+        return response()->json(['data' => $render->render()]);
+    }
+
+    public function visibility_password($id)
+    {
+        $encrypt = User::findOrFail($id, ['encrypt_view']);
+        $decrypt = decrypt($encrypt->encrypt_view);
+        return response()->json(['data' => $decrypt]);
+    }
+
+    public function update_password($id)
+    {
+        $user = User::findOrFail($id);
+
+        $validator = Validator::make($this->request->all(), [
+            'new_password' => 'required|string|max:20|min:8|regex:/^[a-zA-Z0-9]+$/'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator);
+        }
+
+        $validated = $validator->validated();
+
+        try {
+            $user->update([
+                'password' => bcrypt($validated['new_password']),
+                'encrypt_view' => encrypt($validated['new_password'])
+            ]);
+
+            $user->save();
+
+            return back()
+                ->with('success','Successfully Change Password');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e);
         }
     }
 }
