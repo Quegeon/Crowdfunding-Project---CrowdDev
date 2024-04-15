@@ -77,7 +77,7 @@
                       </div>
                       <div class="col-sm-6">
                         <label class="form-label">Country</label>
-                        <select name="country" id="country-data">
+                        <select name="country" class="country-data">
                           <option></option>
                         </select>
                       </div>
@@ -133,4 +133,4 @@
         </div>
       </div>
     </div>
-  </div>
+</div>

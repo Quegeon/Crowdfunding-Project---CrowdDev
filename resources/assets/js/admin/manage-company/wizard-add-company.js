@@ -140,7 +140,7 @@
         validationStepper.next();
       });
 
-      const country = $('#country-data');
+      const country = $('.country-data');
       if (country.length) {
         country.each(function () {
           const $this = $(this);

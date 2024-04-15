@@ -91,5 +91,6 @@
 
     @include('content.pages.admin.management.company.component.modal-add-company')
     @include('content.pages.admin.management.company.component.modal-detail-company')
+    @include('content.pages.admin.management.company.component.modal-edit-company')
 
 @endsection

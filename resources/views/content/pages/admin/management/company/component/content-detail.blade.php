@@ -33,7 +33,7 @@
       </div>
     </div>
     <div class="bs-stepper-content">
-      <form id="addCompanyForm" onSubmit="return false">
+      <form onSubmit="return false">
         <div id="account-details" class="content">
           <div class="row g-3">
             <div class="col-sm-12">
