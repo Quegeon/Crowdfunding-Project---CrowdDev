@@ -54,6 +54,7 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
         Route::prefix('company')->controller(M_Company::class)->group(function(){
             Route::get('/', 'index')->name('management.company.index');
             Route::post('/store', 'store')->name('management.company.store');
+            Route::get('/detail/{id}', 'detail')->name('management.company.detail');
             Route::get('/show/{id}', 'show')->name('management.company.show');
             Route::put('/update/{id}', 'update')->name('management.company.update');
             Route::get('/destroy/{id}', 'destroy')->name('management.company.destroy');

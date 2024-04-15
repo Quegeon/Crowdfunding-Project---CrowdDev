@@ -72,4 +72,11 @@ class ManageCompany extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function detail($id)
+    {
+        $company = Company::findOrFail($id, ['id','username','company_name','work_field','country','company_email','company_description','name','position','personal_email']);
+        $render = view('content.pages.admin.management.company.component.content-detail', compact('company'));
+        return response()->json(['data' => $render->render()]);
+    }
 }

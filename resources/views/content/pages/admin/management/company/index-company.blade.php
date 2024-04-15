@@ -1,6 +1,6 @@
 @extends('layouts.layoutMaster')
 
-@section('title', 'Management User')
+@section('title', 'Management Company')
 
 @section('vendor-style')
     @vite([
@@ -25,7 +25,8 @@
 
 @section('page-script')
     @vite([
-        'resources/assets/js/admin/manage-company/wizard-add-company.js'
+        'resources/assets/js/admin/manage-company/wizard-add-company.js',
+        'resources/assets/js/admin/manage-company/general-company.js'
     ])
 @endsection
 
@@ -74,9 +75,10 @@
                             <div class="d-flex dropdown justify-content-center">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                                 <div class="dropdown-menu">
-                                    <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.user.show', $c->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
-                                    <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.user.destroy', $c->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
-                                    <button type="button" class="dropdown-item btn-change-password" data-href="{{ route('management.user.show.password', $c->id) }}"><i class="ti ti-key me-1"></i> Change Password</button>
+                                    <button type="button" class="dropdown-item btn-detail" data-href="{{ route('management.company.detail', $c->id) }}"><i class="ti ti-search me-1"></i> Detail</button>
+                                    <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.company.show', $c->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
+                                    <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.company.destroy', $c->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
+                                    <button type="button" class="dropdown-item btn-change-password" data-href="{{ route('management.company.show.password', $c->id) }}"><i class="ti ti-key me-1"></i> Change Password</button>
                                 </div>
                             </div>
                         </td>
@@ -87,8 +89,7 @@
         </div>
     </div>
 
-    @include('content.pages.admin.management.company.component.modal-add-user')
-    {{-- @include('content.pages.admin.management.user.component.modal-edit-user')
-    @include('content.pages.admin.management.user.component.modal-change-password-user') --}}
+    @include('content.pages.admin.management.company.component.modal-add-company')
+    @include('content.pages.admin.management.company.component.modal-detail-company')
 
 @endsection
