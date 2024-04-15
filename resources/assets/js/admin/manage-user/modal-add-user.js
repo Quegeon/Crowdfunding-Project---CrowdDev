@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 message: 'Name field input exceeds the character limit'
             },
             regexp: {
-              regexp: /^[a-zA-Zs]+$/,
+              regexp: /^[a-zA-Zs ]+$/,
               message: 'Name field can only consist of alphabetical'
             }
           }

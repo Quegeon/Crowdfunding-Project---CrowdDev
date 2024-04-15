@@ -26,7 +26,7 @@ class ManageUser extends Controller
     public function store()
     {
         $validator = Validator::make($this->request->all(), [
-            'name' => 'required|string|max:255|regex:/^[a-zA-Zs]+$/',
+            'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
             'username' => 'required|string|max:30|min:6|unique:users,username|regex:/^[a-zA-Z0-9 ]+$/',
             'password' => 'required|string|max:20|min:8|regex:/^[a-zA-Z0-9 ]+$/',
             'email' => 'required|string|email|max:50',
@@ -76,7 +76,7 @@ class ManageUser extends Controller
 
         if ($this->request->username == $user->username) {
             $validator = Validator::make($this->request->all(), [
-                'name' => 'required|string|max:255|regex:/^[a-zA-Zs]+$/',
+                'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
                 'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
                 'email' => 'required|string|email|max:50',
                 'payment_credential' => 'nullable|numeric|digits:6|regex:/^[0-9]+$/'
@@ -84,7 +84,7 @@ class ManageUser extends Controller
 
         } else {
             $validator = Validator::make($this->request->all(), [
-                'name' => 'required|string|max:255|regex:/^[a-zA-Zs]+$/',
+                'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
                 'username' => 'required|string|max:30|min:6|unique:users,username|regex:/^[a-zA-Z0-9 ]+$/',
                 'email' => 'required|string|email|max:50',
                 'payment_credential' => 'nullable|numeric|digits:6|regex:/^[0-9]+$/'
