@@ -27,6 +27,7 @@
 </form>
 
 <script>
+  $(document).ready(function(){
     FormValidation.formValidation(document.getElementById('editUserForm'), {
       fields: {
         name: {
@@ -99,4 +100,5 @@
         defaultSubmit: new FormValidation.plugins.DefaultSubmit()
       }
     });
+  })
 </script>

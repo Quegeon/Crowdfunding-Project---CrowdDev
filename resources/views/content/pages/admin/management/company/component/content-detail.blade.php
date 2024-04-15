@@ -107,6 +107,7 @@
 </div>
 
 <script>
+  $(document).ready(function(){
     const wizardIconsModernVertical = document.querySelector('#detail-company-wizard');
 
     if (typeof wizardIconsModernVertical !== undefined && wizardIconsModernVertical !== null) {
@@ -132,4 +133,5 @@
             });
         }
     }
+  })
 </script>

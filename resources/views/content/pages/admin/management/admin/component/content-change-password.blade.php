@@ -27,34 +27,36 @@
 @vite('resources/assets/js/admin/manage-admin/modal-change-password.js')
 
 <script>
+  $(document).ready(function(){
     FormValidation.formValidation(document.getElementById('changeAdminPasswordForm'), {
-    fields: {
-      new_password: {
-        validators: {
-          notEmpty: {
-            message: 'Password field must be filled'
-          },
-          stringLength: {
-            min: 8,
-            max: 20,
-            message: 'Password field must be more than 8 and less than 20 characters long'
-          },
-          regexp: {
-            regexp: /^[a-zA-Z0-9]+$/,
-            message: 'Password field can only consist of alphabetical and number'
+      fields: {
+        new_password: {
+          validators: {
+            notEmpty: {
+              message: 'Password field must be filled'
+            },
+            stringLength: {
+              min: 8,
+              max: 20,
+              message: 'Password field must be more than 8 and less than 20 characters long'
+            },
+            regexp: {
+              regexp: /^[a-zA-Z0-9]+$/,
+              message: 'Password field can only consist of alphabetical and number'
+            }
           }
-        }
+        },
       },
-    },
-    plugins: {
-      trigger: new FormValidation.plugins.Trigger(),
-      bootstrap5: new FormValidation.plugins.Bootstrap5({
-        eleValidClass: '',
-        rowSelector: '.col-12'
-      }),
-      autoFocus: new FormValidation.plugins.AutoFocus(),
-      submitButton: new FormValidation.plugins.SubmitButton(),
-      defaultSubmit: new FormValidation.plugins.DefaultSubmit()
-    }
-  });
+      plugins: {
+        trigger: new FormValidation.plugins.Trigger(),
+        bootstrap5: new FormValidation.plugins.Bootstrap5({
+          eleValidClass: '',
+          rowSelector: '.col-12'
+        }),
+        autoFocus: new FormValidation.plugins.AutoFocus(),
+        submitButton: new FormValidation.plugins.SubmitButton(),
+        defaultSubmit: new FormValidation.plugins.DefaultSubmit()
+      }
+    });
+  })
 </script>

@@ -6,9 +6,7 @@
           <div class="text-center mb-4">
             <h3 class="mb-2">Detail Company Account</h3>
           </div>
-          <div class="col-12">
-            <div id="content-detail"></div>
-          </div>
+          <div id="content-detail" class="col-12"></div>
         </div>
       </div>
     </div>
