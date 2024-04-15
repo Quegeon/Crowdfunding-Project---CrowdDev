@@ -149,4 +149,20 @@ class ManageCompany extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function destroy($id)
+    {
+        $company = Company::findOrFail($id);
+
+        try {
+            $company->delete();
+
+            return back()
+                ->with('success', 'Successfully Delete Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }
