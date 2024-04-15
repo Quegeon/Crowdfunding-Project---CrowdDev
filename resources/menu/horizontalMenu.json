@@ -20,6 +20,11 @@
           "url": "/management/user",
           "name": "User",
           "slug": "management.user.index"
+        },
+        {
+          "url": "/management/company",
+          "name": "Company",
+          "slug": "management.company.index"
         }
       ]
     },

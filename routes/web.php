@@ -10,6 +10,7 @@ use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\pages\admin\DashboardController as DashboardAdmin;
 use App\Http\Controllers\pages\admin\management\ManageAdmin as M_Admin;
 use App\Http\Controllers\pages\admin\management\ManageUser as M_User;
+use App\Http\Controllers\pages\admin\management\ManageCompany as M_Company;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +49,17 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
             Route::get('/show/password/{id}', 'show_password')->name('management.user.show.password');
             Route::get('/visibility/password/{id}', 'visibility_password')->name('management.user.visibility.password');
             Route::put('/update/password/{id}', 'update_password')->name('management.user.update.password');
+        });
+        // M_Company
+        Route::prefix('company')->controller(M_Company::class)->group(function(){
+            Route::get('/', 'index')->name('management.company.index');
+            Route::post('/store', 'store')->name('management.company.store');
+            Route::get('/show/{id}', 'show')->name('management.company.show');
+            Route::put('/update/{id}', 'update')->name('management.company.update');
+            Route::get('/destroy/{id}', 'destroy')->name('management.company.destroy');
+            Route::get('/show/password/{id}', 'show_password')->name('management.company.show.password');
+            Route::get('/visibility/password/{id}', 'visibility_password')->name('management.company.visibility.password');
+            Route::put('/update/password/{id}', 'update_password')->name('management.company.update.password');
         });
     });
 
