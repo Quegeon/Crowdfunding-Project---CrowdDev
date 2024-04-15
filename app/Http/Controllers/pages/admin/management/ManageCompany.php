@@ -165,4 +165,50 @@ class ManageCompany extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function show_password($id)
+    {
+        $dataId = Company::findOrFail($id, ['id']);
+        $render = view('content.pages.admin.management.company.component.content-change-password', compact('dataId'));
+        return response()->json(['data' => $render->render()]);
+    }
+
+    public function visibility_password($id)
+    {
+        $encrypt = Company::findOrFail($id, ['encrypt_view']);
+        $decrypt = decrypt($encrypt->encrypt_view);
+        return response()->json(['data' => $decrypt]);
+    }
+
+    public function update_password($id)
+    {
+        $company = Company::findOrFail($id);
+
+        $validator = Validator::make($this->request->all(), [
+            'new_password' => 'required|string|max:20|min:8|regex:/^[a-zA-Z0-9]+$/'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator);
+        };
+
+        $validated = $validator->validated();
+
+        try {
+            $company->update([
+                'password' => bcrypt($validated['new_password']),
+                'encrypt_view' => encrypt($validated['new_password'])
+            ]);
+            
+            $company->save();
+
+            return back()
+                ->with('success', 'Successfully Change Password');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }

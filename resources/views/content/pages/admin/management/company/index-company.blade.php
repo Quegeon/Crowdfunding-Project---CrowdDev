@@ -92,5 +92,6 @@
     @include('content.pages.admin.management.company.component.modal-add-company')
     @include('content.pages.admin.management.company.component.modal-detail-company')
     @include('content.pages.admin.management.company.component.modal-edit-company')
+    @include('content.pages.admin.management.company.component.modal-change-password-company')
 
 @endsection

@@ -38,3 +38,17 @@ $('.btn-delete').on('click', function(e) {
         }
     });
 });
+
+$('.btn-change-password').on('click', function() {
+    $.ajax({
+        url: $(this).data('href'),
+        method: 'GET',
+        success: function(res) {
+            $('#content-change-password').html(res.data);
+            $('#changePasswordCompany').modal('show');
+        },
+        error: function(err) {
+            console.log(err);          
+        }
+    });
+})
