@@ -18,7 +18,7 @@
         },
         {
           "url": "/management/user",
-          "name": "User",
+          "name": "Client & Sponsor",
           "slug": "management.user.index"
         },
         {

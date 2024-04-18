@@ -1,11 +1,12 @@
 @extends('layouts.layoutMaster')
 
-@section('title', 'Management User')
+@section('title', 'Management Client & Sponsor')
 
 @section('vendor-style')
     @vite([
         'resources/assets/vendor/libs/@form-validation/form-validation.scss',
-        'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'
+        'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss',
+        'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss'
     ])
 @endsection
 
@@ -15,7 +16,8 @@
         'resources/assets/vendor/libs/@form-validation/bootstrap5.js',
         'resources/assets/vendor/libs/@form-validation/auto-focus.js',
         'resources/assets/vendor/libs/jquery/jquery.js',
-        'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'  
+        'resources/assets/vendor/libs/sweetalert2/sweetalert2.js',
+        'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js'
     ])
 @endsection
 
@@ -35,14 +37,14 @@
     </style>
 
     <h4 class="py-3 mb-4">
-        <span class="text-muted fw-light">Management /</span> User
+        <span class="text-muted fw-light">Management /</span> Client & Sponsor
     </h4>
 
     @include('_partials.alert')
 
     <div class="card">
         <div class="d-flex justify-content-between">
-            <h5 class="card-header">User Data</h5>
+            <h5 class="card-header">Client & Sponsor Data</h5>
             <div class="d-flex align-items-center me-4">
                 <button type="button" class="rounded px-4 py-2 btn btn-outline-success bg-label-success" data-bs-toggle="modal" data-bs-target="#addUser"><i class="fa fa-plus me-3"></i> Add Data</button>
             </div>

@@ -4,8 +4,8 @@
         <div class="modal-body">
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           <div class="text-center mb-4">
-            <h3 class="mb-2">Create User Account</h3>
-            <p class="text-muted">User accounts have two roles: as a Client and as a Sponsor, simultaneously.</p>
+            <h3 class="mb-2">Create Client & Sponsor Account</h3>
+            <p class="text-muted">Client & Sponsor account share the same two roles: as a Client and as a Sponsor simultaneously.</p>
           </div>
           <form method="POST" action="{{ route('management.user.store') }}" id="addUserForm" class="row g-3" autocomplete="off">
             @csrf
