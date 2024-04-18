@@ -1,3 +1,15 @@
+<style>
+  /* Change background color on hover */
+.select2-results__option:hover {
+    background-color: #f0f0f0; /* Change to desired color */
+}
+
+/* Change background color on selection */
+.select2-results__option[aria-selected=true] {
+    background-color: #e6e6e6; /* Change to desired color */
+}
+</style>
+
 <div class="modal fade" id="addCompany" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-simple">
       <div class="modal-content p-3 p-md-5">
@@ -59,6 +71,13 @@
                           <span class="input-group-text cursor-pointer" id="password-modern-vertical1"><i class="ti ti-eye-off"></i></span>
                         </div>
                       </div>
+                      <div class="col-sm-6">
+                        <label class="form-label">Company Email</label>
+                        <div class="input-group">
+                          <span class="input-group-text" id="basic-addon11">@</span>
+                          <input type="text" id="company_email" name="company_email" class="form-control" placeholder="Please Enter An Email Address" value="{{ old('company_email') }}" aria-describedby="basic-addon11" />
+                        </div>
+                      </div>
                       <div class="col-12 d-flex justify-content-end">
                         <button class="btn btn-primary btn-next"> <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i class="ti ti-arrow-right"></i></button>
                       </div>
@@ -80,13 +99,6 @@
                         <select name="country" class="country-data">
                           <option></option>
                         </select>
-                      </div>
-                      <div class="col-sm-6">
-                        <label class="form-label">Company Email</label>
-                        <div class="input-group">
-                          <span class="input-group-text" id="basic-addon11">@</span>
-                          <input type="text" id="company_email" name="company_email" class="form-control" placeholder="Please Enter An Email Address" value="{{ old('company_email') }}" aria-describedby="basic-addon11" />
-                        </div>
                       </div>
                       <div class="col-sm-12">
                         <label class="form-label">Company Description</label>

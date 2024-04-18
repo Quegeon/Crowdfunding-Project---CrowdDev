@@ -26,12 +26,12 @@ class ManageCompany extends Controller
     public function store()
     {
         $validator = Validator::make($this->request->all(), [
-            'username' => 'required|string|max:30|min:6|unique:companies,username|regex:/^[a-zA-Z0-9 ]+$/',
+            'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
             'password' => 'required|string|max:20|min:8|regex:/^[a-zA-Z0-9 ]+$/',
             'company_name' => 'required|string|max:255|regex:/^[a-zA-Z0-9 ]+$/',
             'work_field' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9\s, ]+$/',
             'country' => 'required|string',
-            'company_email' => 'required|string|email|max:50',
+            'company_email' => 'required|string|email|max:50|unique:companies,company_email',
             'company_description' => 'nullable|string|max:255',
             'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
             'position' => 'required|string|max:50|regex:/^[a-zA-Zs ]+$/',
@@ -54,7 +54,7 @@ class ManageCompany extends Controller
                 'encrypt_view' => encrypt($validated['password']),
                 'company_name' => $validated['company_name'],
                 'work_field' => $validated['work_field'],
-                'country' => $validated['country'],
+                'country' => Str::lower($validated['country']),
                 'company_email' => $validated['company_email'],
                 'company_description' => $validated['company_description'],
                 'name' => $validated['name'],
@@ -91,7 +91,7 @@ class ManageCompany extends Controller
     {
         $company = Company::findOrFail($id);
 
-        if ($this->request->username == $company->username) {
+        if ($this->request->company_email == $company->company_email) {
             $validator = Validator::make($this->request->all(), [
                 'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
                 'company_name' => 'required|string|max:255|regex:/^[a-zA-Z0-9 ]+$/',
@@ -106,11 +106,11 @@ class ManageCompany extends Controller
 
         } else {
             $validator = Validator::make($this->request->all(), [
-                'username' => 'required|string|max:30|min:6|unique:companies,username|regex:/^[a-zA-Z0-9 ]+$/',
+                'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
                 'company_name' => 'required|string|max:255|regex:/^[a-zA-Z0-9 ]+$/',
                 'work_field' => 'nullable|string|max:255|regex:/^[a-zA-Z0-9\s, ]+$/',
                 'country' => 'required|string',
-                'company_email' => 'required|string|email|max:50',
+                'company_email' => 'required|string|email|max:50|unique:companies,company_email',
                 'company_description' => 'nullable|string|max:255',
                 'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
                 'position' => 'required|string|max:50|regex:/^[a-zA-Zs ]+$/',
@@ -131,7 +131,7 @@ class ManageCompany extends Controller
                 'username' => $validated['username'],
                 'company_name' => $validated['company_name'],
                 'work_field' => $validated['work_field'],
-                'country' => $validated['country'],
+                'country' => Str::lower($validated['country']),
                 'company_email' => $validated['company_email'],
                 'company_description' => $validated['company_description'],
                 'name' => $validated['name'],

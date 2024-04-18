@@ -27,9 +27,9 @@ class ManageAdmin extends Controller
     {
         $validator = Validator::make($this->request->all(), [
             'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
-            'username' => 'required|string|max:30|min:6|unique:admins,username|regex:/^[a-zA-Z0-9 ]+$/',
+            'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
             'password' => 'required|string|max:20|min:8|regex:/^[a-zA-Z0-9]+$/',
-            'email' => 'required|string|email|max:50'
+            'email' => 'required|string|email|max:50|unique:admins,email'
         ]);
 
         if ($validator->fails()) {
@@ -73,7 +73,7 @@ class ManageAdmin extends Controller
     {
         $admin = Admin::findOrFail($id);
 
-        if ($admin->username === $this->request->username) {
+        if ($admin->email === $this->request->email) {
             $validator = Validator::make($this->request->all(), [
                 'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
                 'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
@@ -83,8 +83,8 @@ class ManageAdmin extends Controller
         } else {
             $validator = Validator::make($this->request->all(), [
                 'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
-                'username' => 'required|string|max:30|min:6|unique:admins,username|regex:/^[a-zA-Z0-9 ]+$/',
-                'email' => 'required|string|email|max:50'
+                'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
+                'email' => 'required|string|email|max:50|unique:admins,email'
             ]);
         }
 

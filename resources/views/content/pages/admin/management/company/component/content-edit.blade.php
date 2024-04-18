@@ -38,9 +38,16 @@
         @method('PUT')
         <div id="account-details" class="content">
           <div class="row g-3">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
               <label class="form-label">Username</label>
               <input type="text" name="username" class="form-control" placeholder="{{ $company->username }}" value="{{ $company->username }}" />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label">Company Email</label>
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon11">@</span>
+                <input type="text" id="company_email" name="company_email" class="form-control" placeholder="{{ $company->company_email }}" value="{{ $company->company_email }}" aria-describedby="basic-addon11" />
+              </div>
             </div>
             <div class="col-12 d-flex justify-content-end">
               <button class="btn btn-primary btn-next"> <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i class="ti ti-arrow-right"></i></button>
@@ -62,13 +69,6 @@
               <select name="country" class="country-data">
                 <option value="{{ $company->country }}" selected>Default: {{ $company->country }}</option>
               </select>
-            </div>
-            <div class="col-sm-6">
-              <label class="form-label">Company Email</label>
-              <div class="input-group">
-                <span class="input-group-text" id="basic-addon11">@</span>
-                <input type="text" id="company_email" name="company_email" class="form-control" placeholder="{{ $company->company_email }}" value="{{ $company->company_email }}" aria-describedby="basic-addon11" />
-              </div>
             </div>
             <div class="col-sm-12">
               <label class="form-label">Company Description</label>
@@ -129,8 +129,6 @@
             const validationStepper = new Stepper(wizardIconsModernVertical, {
                 linear: true
             });
-
-            // console.log(wizardValidationFormStep1);
         
             const FormValidation1 = FormValidation.formValidation(wizardValidationFormStep1, {
                 fields: {
@@ -148,14 +146,28 @@
                                 regexp: /^[a-zA-Z0-9 ]+$/,
                                 message: 'Username field can only consist of alphabetical, number and space'
                             }
-                        }
+                        },
                     },
+                    company_email: {
+                        validators: {
+                          notEmpty: {
+                              message: 'Company Email field must be filled'
+                          },
+                          stringLength: {
+                              max: 50,
+                              message: 'Company Email field input must be less than 50 characters long'
+                          },
+                          emailAddress: {
+                              message: 'Company Email field input must be a valid email address'
+                          }
+                        }
+                    }
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
                     bootstrap5: new FormValidation.plugins.Bootstrap5({
                         eleValidClass: '',
-                        rowSelector: '.col-sm-12'
+                        rowSelector: '.col-sm-6'
                     }),
                     autoFocus: new FormValidation.plugins.AutoFocus(),
                     submitButton: new FormValidation.plugins.SubmitButton()
@@ -206,21 +218,7 @@
                             message: 'Country field must be selected'
                         }
                         }
-                    },
-                    company_email: {
-                        validators: {
-                        notEmpty: {
-                            message: 'Company Email field must be filled'
-                        },
-                        stringLength: {
-                            max: 50,
-                            message: 'Company Email field input must be less than 50 characters long'
-                        },
-                        emailAddress: {
-                            message: 'Company Email field input must be a valid email address'
-                        }
-                        }
-                    },
+                    }
                 },
                 plugins: {
                     trigger: new FormValidation.plugins.Trigger(),
@@ -299,16 +297,16 @@
                     },
                     personal_email: {
                         validators: {
-                        notEmpty: {
-                            message: 'Personal Email field must be filled'
-                        },
-                        stringLength: {
-                            max: 50,
-                            message: 'Personal Email field input must be less than 50 characters long'
-                        },
-                        emailAddress: {
-                            message: 'Personal Email field input must be a valid email address'
-                        }
+                          notEmpty: {
+                              message: 'Personal Email field must be filled'
+                          },
+                          stringLength: {
+                              max: 50,
+                              message: 'Personal Email field input must be less than 50 characters long'
+                          },
+                          emailAddress: {
+                              message: 'Personal Email field input must be a valid email address'
+                          }
                         }
                     }
                 },

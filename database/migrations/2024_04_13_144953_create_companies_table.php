@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->uuid('id')->primary();
-            $table->string('username')->unique();
+            $table->string('username');
             $table->string('password');
             $table->string('encrypt_view');
             $table->string('company_name');
             $table->string('work_field')->nullable();
             $table->string('country');
-            $table->string('company_email');
+            $table->string('company_email')->unique();
             $table->string('company_description')->nullable();
             $table->string('name');
             $table->string('position');

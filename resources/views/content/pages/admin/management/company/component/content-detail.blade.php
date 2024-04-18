@@ -36,9 +36,16 @@
       <form onSubmit="return false">
         <div id="account-details" class="content">
           <div class="row g-3">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
               <label class="form-label">Username</label>
               <input type="text" class="form-control" value="{{ $company->username }}" disabled />
+            </div>
+            <div class="col-sm-6">
+              <label class="form-label">Company Email</label>
+              <div class="input-group">
+                <span class="input-group-text" id="basic-addon11">@</span>
+                <input type="text" id="company_email" class="form-control" value="{{ $company->company_email }}" aria-describedby="basic-addon11" disabled />
+              </div>
             </div>
             <div class="col-12 d-flex justify-content-end">
               <button class="btn btn-primary btn-next"> <span class="align-middle d-sm-inline-block d-none me-sm-1">Next</span> <i class="ti ti-arrow-right"></i></button>
@@ -58,13 +65,6 @@
             <div class="col-sm-6">
               <label class="form-label">Country</label>
               <input type="text" class="form-control" value="{{ $company->country }}" disabled />
-            </div>
-            <div class="col-sm-6">
-              <label class="form-label">Company Email</label>
-              <div class="input-group">
-                <span class="input-group-text" id="basic-addon11">@</span>
-                <input type="text" id="company_email" class="form-control" value="{{ $company->company_email }}" aria-describedby="basic-addon11" disabled />
-              </div>
             </div>
             <div class="col-sm-12">
               <label class="form-label">Company Description</label>

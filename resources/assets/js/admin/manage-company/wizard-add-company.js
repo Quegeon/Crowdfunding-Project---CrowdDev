@@ -54,6 +54,20 @@
               }
             }
           },
+          company_email: {
+            validators: {
+              notEmpty: {
+                message: 'Company Email field must be filled'
+              },
+              stringLength: {
+                max: 50,
+                message: 'Company Email field input must be less than 50 characters long'
+              },
+              emailAddress: {
+                message: 'Company Email field input must be a valid email address'
+              }
+            }
+          }
         },
         plugins: {
           trigger: new FormValidation.plugins.Trigger(),
@@ -111,21 +125,7 @@
                 message: 'Country field must be selected'
               }
             }
-          },
-          company_email: {
-            validators: {
-              notEmpty: {
-                message: 'Company Email field must be filled'
-              },
-              stringLength: {
-                max: 50,
-                message: 'Company Email field input must be less than 50 characters long'
-              },
-              emailAddress: {
-                message: 'Company Email field input must be a valid email address'
-              }
-            }
-          },
+          }
         },
         plugins: {
           trigger: new FormValidation.plugins.Trigger(),
@@ -158,6 +158,14 @@
                       id: country.name.common,
                       text: country.name.common
                   })),
+                  // templateResult: function (data) {
+                  //   if (!data.id) { return data.text; }
+                  //   return $('<span style="color: #b2366a; background-color: #f9eff3">' + data.text + '</span>');
+                  // },
+                  // templateSelection: function (data) {
+                  //   if (!data.id) { return data.text; }
+                  //   return $('<span style="background-color: #f8f7fa">' + data.text + '</span>');
+                  // }
 
                 }).on('change', function () {
                     FormValidation2.revalidateField('country');
