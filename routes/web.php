@@ -68,6 +68,7 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
             Route::get('/', 'index')->name('management.proposal.index');
             Route::post('/store', 'store')->name('management.proposal.store');
             Route::get('/detail/{id}', 'detail')->name('management.proposal.detail');
+            Route::get('/show/{id}', 'show')->name('management.proposal.show');
             Route::put('/update/{id}', 'update')->name('management.proposal.update');
             Route::get('/destroy/{id}', 'destroy')->name('management.proposal.destroy');
         });

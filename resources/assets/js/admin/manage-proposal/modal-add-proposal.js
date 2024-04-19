@@ -50,8 +50,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
               message: 'Document field must be filled'
             },
             file: {
-              extension: 'pdf,docx,doc',
-              type: 'application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword',
+              extension: 'pdf',
+              type: 'application/pdf',
               maxSize: '10485760',
               message: 'Document field input file invalid'
             }

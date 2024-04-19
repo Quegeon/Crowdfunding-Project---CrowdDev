@@ -25,7 +25,7 @@
           <div class="col-12">
             <div class="d-flex justify-content-between align-content-center">
               <label class="form-label">Document</label>
-              <p style="width: 90%" class="text-muted small justify-content-start mb-0">( pdf, docx, doc )</p>
+              <p style="width: 90%" class="text-muted small justify-content-start mb-0">( pdf )</p>
             </div>
             <input type="file" name="document" class="form-control" />
           </div>

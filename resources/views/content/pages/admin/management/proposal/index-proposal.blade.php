@@ -23,7 +23,8 @@
 
 @section('page-script')
   @vite([
-    'resources/assets/js/admin/manage-proposal/modal-add-proposal.js'
+    'resources/assets/js/admin/manage-proposal/modal-add-proposal.js',
+    'resources/assets/js/admin/manage-proposal/general-proposal.js'
   ])
 @endsection
 
@@ -55,9 +56,10 @@
           <th>#</th>
           <th>Title</th>
           <th>Username</th>
+          <th>Document</th>
           <th>Company</th>
           <th>Total Target</th>
-          <th>Status</th>
+          <th class="text-center">Status</th>
           <th class="text-center">Actions</th>
         </tr>
       </thead>
@@ -67,16 +69,40 @@
             <td>{{ $loop->iteration }}</td>
             <td>{{ $p->title }}</td>
             <td>{{ $p->User->username }}</td>
+            <td>{{ $p->document }}</td>
             <td>{{ ($p->Company)->company_name ?? '-' }}</td>
             <td>Rp. {{ number_format($p->total_target,2,',','.') }}</td>
-            <td>{{ $p->status }}</td>
+            <td class="text-center">
+              @switch($p->status)
+                  @case('Funding')
+                      <span class="badge bg-label-primary text-center">Funding</span>
+                      @break
+                  @case('Selection')
+                      <span class="badge bg-label-info text-center">Selection</span>
+                      @break
+                  @case('Voting')
+                      <span class="badge bg-label-dark text-center">Voting</span>
+                      @break
+                  @case('Approval')
+                      <span class="badge bg-label-warning text-center">Warning</span>
+                      @break
+                  @case('Ongoing')
+                      <span class="badge bg-label-success text-center">Ongoing</span>
+                      @break
+                  @case('Confirmation')
+                      <span class="badge bg-label-warning text-center">Confirmation</span>
+                      @break
+                  @case('Done')
+                      <span class="badge bg-label-secondary text-center">Done</span>
+                      @break
+              @endswitch
+            </td>
             <td>
               <div class="d-flex dropdown justify-content-center">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                 <div class="dropdown-menu">
-                  <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.admin.show', $p->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
-                  <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.admin.destroy', $p->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
-                  <button type="button" class="dropdown-item btn-change-password" data-href="{{ route('management.admin.show.password', $p->id) }}"><i class="ti ti-key me-1"></i> Change Password</button>
+                  <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.proposal.show', $p->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
+                  <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.proposal.destroy', $p->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
                 </div>
               </div>
             </td>
@@ -88,7 +114,6 @@
 </div>
 
 @include('content.pages.admin.management.proposal.component.modal-add-proposal')
-{{-- @include('content.pages.admin.management.admin.component.modal-edit-admin')
-@include('content.pages.admin.management.admin.component.modal-change-password-admin') --}}
+@include('content.pages.admin.management.proposal.component.modal-edit-proposal')
 
 @endsection

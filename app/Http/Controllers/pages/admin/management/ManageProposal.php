@@ -12,16 +12,17 @@ use Illuminate\Support\Str;
 
 class ManageProposal extends Controller
 {
-    protected $request;
+    protected $request, $local;
 
     public function __construct(Request $request)
     {
         $this->request = $request;
+        $this->local = Storage::disk('local');
     }
 
     public function index()
     {
-        $proposal = Proposal::select(['id','title','id_user','id_company','total_target','status'])->get();
+        $proposal = Proposal::select(['id','title','id_user','document','id_company','total_target','status'])->get();
         $client = User::select(['id','username'])->get();
         return view('content.pages.admin.management.proposal.index-proposal', compact('proposal','client'));
     }
@@ -31,7 +32,7 @@ class ManageProposal extends Controller
         $validator = Validator::make($this->request->all(), [
             'title' => 'required|string|min:6|max:100',
             'id_user' => 'required',
-            'document' => 'required|file|max:10240|mimetypes:application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/msword',
+            'document' => 'required|file|max:10240|mimetypes:application/pdf',
             'total_target' => 'required|numeric|digits_between:4,11'
         ]);
 
@@ -42,11 +43,11 @@ class ManageProposal extends Controller
         }
 
         $validated = $validator->validated();
-        $file = $this->request->file('document'); 
+        $file = $this->request->file('document');
 
         try {
             $ouuid = Str::orderedUuid();
-            Storage::disk('local')->put($ouuid . '.' . $file->getClientOriginalExtension(), $file);
+            $this->local->put($ouuid . '.pdf', $file);
 
             $proposal = new Proposal([
                 'id' => $ouuid,
@@ -61,6 +62,57 @@ class ManageProposal extends Controller
 
             return back()
                 ->with('success','Successfully Add Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
+
+    public function show($id)
+    {
+        $proposal = Proposal::findOrFail($id, ['id','title','id_user','total_target']);
+        $client = User::select(['id','username'])->get();
+        $render = view('content.pages.admin.management.proposal.component.content-edit', compact('proposal','client'));
+        return response()->json(['data' => $render->render()]);
+    }
+
+    public function update($id)
+    {
+        $proposal = Proposal::findOrFail($id);
+
+        $validator = Validator::make($this->request->all(), [
+            'title' => 'required|string|min:6|max:100',
+            'id_user' => 'required',
+            'document' => 'nullable|file|max:10240|mimetypes:application/pdf',
+            'total_target' => 'required|numeric|digits_between:4,11'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        try {
+            if ($this->request->hasFile('document')) {
+                $file = $this->request->file('document');
+
+                $this->local->deleteDirectory($id . '.pdf');
+                $this->local->put($id . 'pdf', $file);
+
+                $proposal->document = $file->getClientOriginalName();
+            };
+
+            $proposal->title = $validated['title'];
+            $proposal->id_user = $validated['id_user'];
+            $proposal->total_target = $validated['total_target'];
+            $proposal->save();
+    
+            return back()
+                ->with('success','Successfully Edit Data');
 
         } catch (\Exception $e) {
             return back()
