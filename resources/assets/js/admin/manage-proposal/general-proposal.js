@@ -1,3 +1,5 @@
+$('.table').DataTable({});
+
 $('.btn-edit').on('click', function() {
    $.ajax({
         url: $(this).data('href'),

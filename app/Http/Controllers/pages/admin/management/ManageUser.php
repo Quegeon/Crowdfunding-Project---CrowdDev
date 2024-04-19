@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\pages\admin\management;
 
 use App\Http\Controllers\Controller;
+use App\Models\Proposal;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -123,6 +124,8 @@ class ManageUser extends Controller
 
         try {
             $user->delete();
+            
+            Proposal::where('id_user', $id)->delete();
 
             return back()
                 ->with('success', 'Successfully Delete Data');
