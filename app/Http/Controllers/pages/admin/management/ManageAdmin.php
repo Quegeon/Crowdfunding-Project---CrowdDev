@@ -19,7 +19,7 @@ class ManageAdmin extends Controller
 
     public function index()
     {
-        $admin = Admin::select('id','name','username','email')->get();
+        $admin = Admin::select(['id','name','username','email'])->get();
         return view('content.pages.admin.management.admin.index-admin', compact(['admin']));
     }
 

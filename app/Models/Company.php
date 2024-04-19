@@ -15,4 +15,8 @@ class Company extends Authenticatable
     protected $keyType = 'string';
     public $incrementing = false;
 
+    public function Company()
+    {
+        return $this->hasMany(Company::class, 'id_company', 'id');
+    }
 }

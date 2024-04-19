@@ -19,7 +19,7 @@ class ManageUser extends Controller
 
     public function index()
     {
-        $user = User::select('id','name','username','email')->get();
+        $user = User::select(['id','name','username','email'])->get();
         return view('content.pages.admin.management.user.index-user', compact('user'));
     }
 

@@ -16,4 +16,9 @@ class User extends Authenticatable
     protected $fillable = ['id','name','username','password','encrypt_view','email','payment_credential'];
     protected $keyType = 'string';
     public $incrementing = false;
+
+    public function User()
+    {
+        return $this->hasMany(User::class, 'id_user', 'id');
+    }
 }

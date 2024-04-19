@@ -11,6 +11,7 @@ use App\Http\Controllers\pages\admin\DashboardController as DashboardAdmin;
 use App\Http\Controllers\pages\admin\management\ManageAdmin as M_Admin;
 use App\Http\Controllers\pages\admin\management\ManageUser as M_User;
 use App\Http\Controllers\pages\admin\management\ManageCompany as M_Company;
+use App\Http\Controllers\pages\admin\management\ManageProposal as M_Proposal;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +62,14 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
             Route::get('/show/password/{id}', 'show_password')->name('management.company.show.password');
             Route::get('/visibility/password/{id}', 'visibility_password')->name('management.company.visibility.password');
             Route::put('/update/password/{id}', 'update_password')->name('management.company.update.password');
+        });
+        // M_Proposal
+        Route::prefix('proposal')->controller(M_Proposal::class)->group(function(){
+            Route::get('/', 'index')->name('management.proposal.index');
+            Route::post('/store', 'store')->name('management.proposal.store');
+            Route::get('/detail/{id}', 'detail')->name('management.proposal.detail');
+            Route::put('/update/{id}', 'update')->name('management.proposal.update');
+            Route::get('/destroy/{id}', 'destroy')->name('management.proposal.destroy');
         });
     });
 

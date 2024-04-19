@@ -25,6 +25,11 @@
           "url": "/management/company",
           "name": "Company",
           "slug": "management.company.index"
+        },
+        {
+          "url": "/management/proposal",
+          "name": "Proposal",
+          "slug": "management.proposal.index"
         }
       ]
     },
