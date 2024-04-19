@@ -6,16 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\Proposal;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
 class ManageUser extends Controller
 {
-    protected $request;
+    protected $request, $local;
 
     public function __construct(Request $request)
     {
         $this->request = $request;
+        $this->local = Storage::disk('local');
     }
 
     public function index()
@@ -124,8 +126,13 @@ class ManageUser extends Controller
 
         try {
             $user->delete();
-            
-            Proposal::where('id_user', $id)->delete();
+
+            $proposal = Proposal::where('id_user', $id)->get();
+
+            foreach ($proposal as $p) {
+                $this->local->deleteDirectory($p->id . '.pdf');
+                $p->delete();
+            };
 
             return back()
                 ->with('success', 'Successfully Delete Data');

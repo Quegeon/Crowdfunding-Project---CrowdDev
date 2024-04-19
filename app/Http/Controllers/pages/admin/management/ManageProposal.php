@@ -22,8 +22,15 @@ class ManageProposal extends Controller
 
     public function index()
     {
-        $proposal = Proposal::select(['id','title','id_user','document','id_company','total_target','status'])->get();
         $client = User::select(['id','username'])->get();
+        
+        if (!$client) {
+            return redirect()
+                ->route('dashboard')
+                ->with('error', 'Error Client Data');
+        };
+
+        $proposal = Proposal::select(['id','title','id_user','document','id_company','total_target','status'])->get();
         return view('content.pages.admin.management.proposal.index-proposal', compact('proposal','client'));
     }
 
@@ -113,6 +120,24 @@ class ManageProposal extends Controller
     
             return back()
                 ->with('success','Successfully Edit Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
+
+    public function destroy($id)
+    {
+        $proposal = Proposal::findOrFail($id);
+
+        try {
+            $proposal->delete();
+
+            $this->local->deleteDirectory($id . '.pdf');
+
+            return back()
+                ->with('success', 'Successfully Delete Data');
 
         } catch (\Exception $e) {
             return back()
