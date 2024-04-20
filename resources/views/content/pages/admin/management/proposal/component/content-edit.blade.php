@@ -90,7 +90,7 @@
                             message: 'Total Target field must be filled'
                         },
                         stringLength: {
-                            max: 11,
+                            max: 10,
                             min: 4,
                             message: 'Total Target field input must be more than 4 and less than 11 characters long'
                         },

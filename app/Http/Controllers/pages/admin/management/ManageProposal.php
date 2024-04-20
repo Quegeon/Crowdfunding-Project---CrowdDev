@@ -40,7 +40,7 @@ class ManageProposal extends Controller
             'title' => 'required|string|min:6|max:100',
             'id_user' => 'required',
             'document' => 'required|file|max:10240|mimetypes:application/pdf',
-            'total_target' => 'required|numeric|digits_between:4,11'
+            'total_target' => 'required|numeric|digits_between:4,10'
         ]);
 
         if ($validator->fails()) {
@@ -54,7 +54,7 @@ class ManageProposal extends Controller
 
         try {
             $ouuid = Str::orderedUuid();
-            $this->local->put($ouuid . '.pdf', $file);
+            $file->storeAs('proposal', $ouuid . '.pdf', 'local');
 
             $proposal = new Proposal([
                 'id' => $ouuid,
@@ -92,7 +92,7 @@ class ManageProposal extends Controller
             'title' => 'required|string|min:6|max:100',
             'id_user' => 'required',
             'document' => 'nullable|file|max:10240|mimetypes:application/pdf',
-            'total_target' => 'required|numeric|digits_between:4,11'
+            'total_target' => 'required|numeric|digits_between:4,10'
         ]);
 
         if ($validator->fails()) {
@@ -107,8 +107,8 @@ class ManageProposal extends Controller
             if ($this->request->hasFile('document')) {
                 $file = $this->request->file('document');
 
-                $this->local->deleteDirectory($id . '.pdf');
-                $this->local->put($id . 'pdf', $file);
+                $this->local->delete('proposal/' . $id . '.pdf');
+                $file->storeAs('proposal', $id . '.pdf', 'local');
 
                 $proposal->document = $file->getClientOriginalName();
             };
@@ -134,7 +134,7 @@ class ManageProposal extends Controller
         try {
             $proposal->delete();
 
-            $this->local->deleteDirectory($id . '.pdf');
+            $this->local->delete('proposal/' . $id . '.pdf');
 
             return back()
                 ->with('success', 'Successfully Delete Data');
@@ -143,5 +143,11 @@ class ManageProposal extends Controller
             return back()
                 ->withErrors($e->getMessage());
         }
+    }
+
+    public function download($id)
+    {
+        $proposal = Proposal::findOrFail($id, ['document']);
+        return Storage::download('proposal/' . $id . '.pdf', $proposal->document);
     }
 }

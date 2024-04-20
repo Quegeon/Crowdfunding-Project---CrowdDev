@@ -105,6 +105,7 @@
                 <div class="dropdown-menu">
                   <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.proposal.show', $p->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
                   <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.proposal.destroy', $p->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
+                  <a href="{{ route('management.proposal.download', $p->id) }}" class="dropdown-item"><i class="ti ti-download me-1"></i> Download</a>
                 </div>
               </div>
             </td>

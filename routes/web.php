@@ -71,6 +71,7 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
             Route::get('/show/{id}', 'show')->name('management.proposal.show');
             Route::put('/update/{id}', 'update')->name('management.proposal.update');
             Route::get('/destroy/{id}', 'destroy')->name('management.proposal.destroy');
+            Route::get('/download/{id}', 'download')->name('management.proposal.download');
         });
     });
 

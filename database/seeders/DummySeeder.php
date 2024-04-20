@@ -35,6 +35,16 @@ class DummySeeder extends Seeder
             'payment_credential' => '123456'
         ]);
 
+        User::create([
+            'id' => Str::orderedUuid(),
+            'name' => 'DummyUserTwo',
+            'username' => 'dummyuser2',
+            'password' => bcrypt('12345678'),
+            'encrypt_view' => encrypt('12345678'),
+            'email' => 'dummyuser2@crowddev.id',
+            'payment_credential' => '123456'
+        ]);
+
         Company::create([
             'id' => Str::orderedUuid(),
             'username' => 'dummycompany1',

@@ -129,9 +129,11 @@ class ManageUser extends Controller
 
             $proposal = Proposal::where('id_user', $id)->get();
 
-            foreach ($proposal as $p) {
-                $this->local->deleteDirectory($p->id . '.pdf');
-                $p->delete();
+            if ($proposal) {
+                foreach ($proposal as $p) {
+                    $this->local->delete('proposal/' . $p->id . '.pdf');
+                    $p->delete();
+                };
             };
 
             return back()
