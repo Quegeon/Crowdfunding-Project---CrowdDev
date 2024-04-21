@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('proposals', function (Blueprint $table) {
+        Schema::create('fundings', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('id_proposal');
             $table->uuid('id_user');
-            $table->uuid('id_company')->nullable();
-            $table->string('title');
-            $table->string('document');
-            $table->integer('total_target');
-            $table->integer('total_funded')->default(0);
-            $table->string('status');
+            $table->integer('fund');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('proposals');
+        Schema::dropIfExists('fundings');
     }
 };

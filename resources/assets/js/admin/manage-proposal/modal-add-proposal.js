@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
               stringLength: {
                 max: 10,
                 min: 4,
-                message: 'Total Target field input must be more than 4 and less than 11 characters long'
+                message: 'Total Target field input must be more than 4 and less than 10 characters long'
               },
               regexp: {
                 regexp: /^[0-9]+$/,

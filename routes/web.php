@@ -12,6 +12,7 @@ use App\Http\Controllers\pages\admin\management\ManageAdmin as M_Admin;
 use App\Http\Controllers\pages\admin\management\ManageUser as M_User;
 use App\Http\Controllers\pages\admin\management\ManageCompany as M_Company;
 use App\Http\Controllers\pages\admin\management\ManageProposal as M_Proposal;
+use App\Http\Controllers\pages\admin\management\ManageFunding as M_Funding;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,11 +68,20 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
         Route::prefix('proposal')->controller(M_Proposal::class)->group(function(){
             Route::get('/', 'index')->name('management.proposal.index');
             Route::post('/store', 'store')->name('management.proposal.store');
-            Route::get('/detail/{id}', 'detail')->name('management.proposal.detail');
+            // Route::get('/detail/{id}', 'detail')->name('management.proposal.detail');
             Route::get('/show/{id}', 'show')->name('management.proposal.show');
             Route::put('/update/{id}', 'update')->name('management.proposal.update');
             Route::get('/destroy/{id}', 'destroy')->name('management.proposal.destroy');
             Route::get('/download/{id}', 'download')->name('management.proposal.download');
+        });
+        // M_Funding
+        Route::prefix('funding')->controller(M_Funding::class)->group(function(){
+            Route::get('/', 'index')->name('management.funding.index');
+            Route::post('/store', 'store')->name('management.funding.store');
+            Route::get('/show/{id}', 'show')->name('management.funding.show');
+            Route::put('/update/{id}', 'update')->name('management.funding.update');
+            Route::get('/destroy/{id}', 'destroy')->name('management.funding.destroy');
+            Route::get('/download/{id}', 'download')->name('management.funding.download');
         });
     });
 

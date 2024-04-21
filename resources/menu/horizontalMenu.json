@@ -30,6 +30,11 @@
           "url": "/management/proposal",
           "name": "Proposal",
           "slug": "management.proposal.index"
+        },
+        {
+          "url": "/management/funding",
+          "name": "Funding",
+          "slug": "management.funding.index"
         }
       ]
     },

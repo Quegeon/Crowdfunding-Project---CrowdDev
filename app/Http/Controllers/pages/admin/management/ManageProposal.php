@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\pages\admin\management;
 
 use App\Http\Controllers\Controller;
+use App\Models\Funding;
 use App\Models\Proposal;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,10 +25,10 @@ class ManageProposal extends Controller
     {
         $client = User::select(['id','username'])->get();
         
-        if (!$client) {
+        if ($client->isEmpty()) {
             return redirect()
                 ->route('dashboard')
-                ->with('error', 'Error Client Data');
+                ->with('error', 'Error Required Data');
         };
 
         $proposal = Proposal::select(['id','title','id_user','document','id_company','total_target','status'])->get();
@@ -38,7 +39,7 @@ class ManageProposal extends Controller
     {
         $validator = Validator::make($this->request->all(), [
             'title' => 'required|string|min:6|max:100',
-            'id_user' => 'required',
+            'id_user' => 'required|exists:users,id',
             'document' => 'required|file|max:10240|mimetypes:application/pdf',
             'total_target' => 'required|numeric|digits_between:4,10'
         ]);
@@ -90,7 +91,7 @@ class ManageProposal extends Controller
 
         $validator = Validator::make($this->request->all(), [
             'title' => 'required|string|min:6|max:100',
-            'id_user' => 'required',
+            'id_user' => 'required|exists:users,id',
             'document' => 'nullable|file|max:10240|mimetypes:application/pdf',
             'total_target' => 'required|numeric|digits_between:4,10'
         ]);
@@ -133,6 +134,7 @@ class ManageProposal extends Controller
 
         try {
             $proposal->delete();
+            Funding::where('id_proposal', $id)->delete();
 
             $this->local->delete('proposal/' . $id . '.pdf');
 
