@@ -53,7 +53,7 @@ class DummySeeder extends Seeder
             'company_email' => 'dummycompany1@crowddev.id',
             'company_name' => 'Dummy Company',
             'work_field' => 'Software Developement',
-            'country' => 'indonesia',
+            'country' => 'Indonesia',
             'company_description' => 'Strive for the better',
             'name' => 'DummyUser',
             'position' => 'CEO',

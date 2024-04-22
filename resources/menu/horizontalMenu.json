@@ -37,27 +37,48 @@
           "slug": "management.funding.index"
         }
       ]
+    }
+  ],
+  "menu_user": [
+    {
+      "url": "/dashboard-user",
+      "name": "Dashboard Client & Sponsor",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "dashboard.user"
     },
     {
-      "url": "pages/misc-error",
-      "name": "Error",
-      "icon": "menu-icon tf-icons ti ti-alert-triangle",
-      "slug": "pages-misc-error",
-      "target": "_blank"
+      "name": "Proposal",
+      "icon": "menu-icon tf-icons ti ti-files",
+      "slug": "user",
+      "submenu": [
+        {
+          "url": "/user/proposal",
+          "name": "View Proposal",
+          "slug": "user.proposal.view-proposal"
+        },
+        {
+          "url": "/user/my-proposal",
+          "name": "My Proposal",
+          "slug": "user.proposal.my-proposal"
+        }
+      ]
     },
     {
-      "url": "auth/login-basic",
-      "name": "Login",
-      "icon": "menu-icon tf-icons ti ti-login",
-      "slug": "auth-login-basic",
-      "target": "_blank"
-    },
-    {
-      "url": "auth/register-basic",
-      "name": "Register",
-      "icon": "menu-icon tf-icons ti ti-user",
-      "slug": "auth-register-basic",
-      "target": "_blank"
+      "name": "Company",
+      "icon": "menu-icon tf-icons ti ti-briefcase",
+      "slug": "user",
+      "submenu": [
+        {
+          "url": "/user/company",
+          "name": "View company",
+          "slug": "user.company.view-company"
+        },
+        {
+          "url": "/user/company-selection",
+          "name": "Select Company",
+          "slug": "user.proposal.company-selection"
+        }
+      ]
     }
   ]
 }

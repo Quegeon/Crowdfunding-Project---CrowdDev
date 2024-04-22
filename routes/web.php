@@ -14,6 +14,9 @@ use App\Http\Controllers\pages\admin\management\ManageCompany as M_Company;
 use App\Http\Controllers\pages\admin\management\ManageProposal as M_Proposal;
 use App\Http\Controllers\pages\admin\management\ManageFunding as M_Funding;
 
+//User
+use App\Http\Controllers\pages\user\DashboardController as DashboardUser;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +27,7 @@ use App\Http\Controllers\pages\admin\management\ManageFunding as M_Funding;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 // Admin
 Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
@@ -87,6 +91,10 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
             Route::get('/download/{id}', 'download')->name('management.funding.download');
         });
     });
+
+// User
+Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard');
+
 
 // locale
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
