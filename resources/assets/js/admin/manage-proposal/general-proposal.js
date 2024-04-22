@@ -26,3 +26,31 @@ $('.btn-delete').on('click', function(e) {
         }
     });
 });
+
+$('.btn-detail').on('click', function() {
+    $.ajax({
+         url: $(this).data('href'),
+         method: 'GET',
+         success: function(res) {
+             $('#content-detail').html(res.data)
+             $('#detailProposal').modal('show');
+         },
+         error: function(err) {
+             console.log(err);
+         }
+    });
+ });
+
+$('.btn-select').on('click', function() {
+    $.ajax({
+         url: $(this).data('href'),
+         method: 'GET',
+         success: function(res) {
+             $('#content-selection').html(res.data)
+             $('#selectCompany').modal('show');
+         },
+         error: function(err) {
+             console.log(err);
+         }
+    });
+ });

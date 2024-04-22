@@ -74,13 +74,15 @@
             <td>{{ $f->created_at->toDateString() }}</td>
             <td>Rp. {{ number_format($f->Proposal->total_funded,2,',','.') }} / Rp. {{ number_format($f->Proposal->total_target,2,',','.') }}</td>
             <td>
-              <div class="d-flex dropdown justify-content-center">
-                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
-                <div class="dropdown-menu">
-                  <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.funding.show', $f->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
-                  <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.funding.destroy', $f->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
+              @if ($f->Proposal->status == 'Funding' || $f->Proposal->status == 'Selection')
+                <div class="d-flex dropdown justify-content-center">
+                  <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
+                  <div class="dropdown-menu">
+                    <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.funding.show', $f->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
+                    <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.funding.destroy', $f->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
+                  </div>
                 </div>
-              </div>
+              @endif
             </td>
           </tr>
         @endforeach

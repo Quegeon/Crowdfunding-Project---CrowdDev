@@ -4,7 +4,11 @@ namespace App\Http\Controllers\pages\admin\management;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\Proposal;
+use App\Models\Selection;
+use App\Models\Vote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 
@@ -156,6 +160,17 @@ class ManageCompany extends Controller
 
         try {
             $company->delete();
+
+            $proposal = Proposal::where('id_company', $id)->get();
+
+            if ($proposal) {
+                foreach ($proposal as $p) {
+                    Storage::disk('local')->delete('proposal/' . $p->id . '.pdf');
+                    Selection::where('id_proposal', $p->id)->delete();
+                    Vote::where('id_proposal', $p->id)->delete();
+                    $p->delete();
+                };
+            };
 
             return back()
                 ->with('success', 'Successfully Delete Data');

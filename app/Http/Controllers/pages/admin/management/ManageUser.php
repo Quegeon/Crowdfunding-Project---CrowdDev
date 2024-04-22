@@ -4,7 +4,9 @@ namespace App\Http\Controllers\pages\admin\management;
 
 use App\Http\Controllers\Controller;
 use App\Models\Proposal;
+use App\Models\Selection;
 use App\Models\User;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -12,12 +14,11 @@ use Illuminate\Support\Facades\Validator;
 
 class ManageUser extends Controller
 {
-    protected $request, $local;
+    protected $request;
 
     public function __construct(Request $request)
     {
         $this->request = $request;
-        $this->local = Storage::disk('local');
     }
 
     public function index()
@@ -128,10 +129,13 @@ class ManageUser extends Controller
             $user->delete();
 
             $proposal = Proposal::where('id_user', $id)->get();
+            Vote::where('id_user', $user->id)->delete();
 
             if ($proposal) {
                 foreach ($proposal as $p) {
-                    $this->local->delete('proposal/' . $p->id . '.pdf');
+                    Storage::disk('local')->delete('proposal/' . $p->id . '.pdf');
+                    Selection::where('id_proposal', $p->id)->delete();
+                    Vote::where('id_proposal', $p->id)->delete();
                     $p->delete();
                 };
             };

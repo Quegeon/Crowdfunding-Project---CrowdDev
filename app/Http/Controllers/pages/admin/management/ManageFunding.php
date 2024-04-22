@@ -155,7 +155,7 @@ class ManageFunding extends Controller
         $proposal = Proposal::find($funding->id_proposal);
 
         try {
-            if ($proposal->status == 'Funding' || $proposal->status == 'Selection' && !$proposal->id_company) {
+            if ($proposal->status == 'Funding' || $proposal->status == 'Selection') {
                 $new_fund = $proposal->total_funded - $funding->fund;
                 $proposal->update([
                     'total_funded' => $new_fund,

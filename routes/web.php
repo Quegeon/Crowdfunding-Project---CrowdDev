@@ -68,10 +68,13 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
         Route::prefix('proposal')->controller(M_Proposal::class)->group(function(){
             Route::get('/', 'index')->name('management.proposal.index');
             Route::post('/store', 'store')->name('management.proposal.store');
-            // Route::get('/detail/{id}', 'detail')->name('management.proposal.detail');
+            Route::get('/detail/{id}', 'detail')->name('management.proposal.detail');
             Route::get('/show/{id}', 'show')->name('management.proposal.show');
+            Route::get('/show/selection/{id}', 'show_selection')->name('management.proposal.show.selection');
             Route::put('/update/{id}', 'update')->name('management.proposal.update');
+            Route::put('/selection/{id}', 'company_select')->name('management.proposal.selection');
             Route::get('/destroy/{id}', 'destroy')->name('management.proposal.destroy');
+            Route::get('/done/{id}', 'done')->name('management.proposal.done');
             Route::get('/download/{id}', 'download')->name('management.proposal.download');
         });
         // M_Funding

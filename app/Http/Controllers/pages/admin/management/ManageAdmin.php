@@ -4,6 +4,7 @@ namespace App\Http\Controllers\pages\admin\management;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
@@ -118,6 +119,7 @@ class ManageAdmin extends Controller
         $admin = Admin::findOrFail($id);
 
         try {
+            Vote::where('id_user', $admin->id)->delete();
             $admin->delete();
 
             return back()

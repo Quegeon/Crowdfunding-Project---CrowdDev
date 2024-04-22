@@ -86,7 +86,7 @@
                       <span class="badge bg-label-dark text-center">Voting</span>
                       @break
                   @case('Approval')
-                      <span class="badge bg-label-warning text-center">Warning</span>
+                      <span class="badge bg-label-warning text-center">Approval</span>
                       @break
                   @case('Ongoing')
                       <span class="badge bg-label-success text-center">Ongoing</span>
@@ -103,8 +103,14 @@
               <div class="d-flex dropdown justify-content-center">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                 <div class="dropdown-menu">
+                  <button type="button" class="dropdown-item btn-detail" data-href="{{ route('management.proposal.detail', $p->id) }}"><i class="ti ti-search me-1"></i> Detail</button>
                   <button type="button" class="dropdown-item btn-edit" data-href="{{ route('management.proposal.show', $p->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
                   <button type="button" class="dropdown-item btn-delete" data-href="{{ route('management.proposal.destroy', $p->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
+                  @if ($p->status == 'Selection')
+                    <button type="button" class="dropdown-item btn-select" data-href="{{ route('management.proposal.show.selection', $p->id) }}"><i class="ti ti-briefcase me-1"></i> Select Company</button>
+                  @elseif ($p->status == 'Ongoing')
+                    <a href="{{ route('management.proposal.done', $p->id) }}" class="dropdown-item"><i class="ti ti-check me-1"></i> Done</a>
+                  @endif
                   <a href="{{ route('management.proposal.download', $p->id) }}" class="dropdown-item"><i class="ti ti-download me-1"></i> Download</a>
                 </div>
               </div>
@@ -118,5 +124,7 @@
 
 @include('content.pages.admin.management.proposal.component.modal-add-proposal')
 @include('content.pages.admin.management.proposal.component.modal-edit-proposal')
+@include('content.pages.admin.management.proposal.component.modal-detail-proposal')
+@include('content.pages.admin.management.proposal.component.modal-company-selection')
 
 @endsection
