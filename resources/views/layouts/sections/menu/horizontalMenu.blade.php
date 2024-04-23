@@ -5,7 +5,7 @@ $configData = Helper::appClasses();
 <aside id="layout-menu" class="layout-menu-horizontal menu-horizontal  menu bg-menu-theme flex-grow-0">
   <div class="{{$containerNav}} d-flex h-100">
     <ul class="menu-inner">
-      @foreach ($menuData[1]->menu as $menu)
+      @foreach ($menuData[1]->menu_user as $menu)
 
       {{-- active menu method --}}
       @php

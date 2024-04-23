@@ -49,15 +49,15 @@
     {
       "name": "Proposal",
       "icon": "menu-icon tf-icons ti ti-files",
-      "slug": "user",
+      "slug": "user.proposal",
       "submenu": [
         {
-          "url": "/user/proposal",
+          "url": "/user/proposal/view-proposal",
           "name": "View Proposal",
           "slug": "user.proposal.view-proposal"
         },
         {
-          "url": "/user/my-proposal",
+          "url": "/user/proposal/my-proposal",
           "name": "My Proposal",
           "slug": "user.proposal.my-proposal"
         }
@@ -66,17 +66,17 @@
     {
       "name": "Company",
       "icon": "menu-icon tf-icons ti ti-briefcase",
-      "slug": "user",
+      "slug": "user.company",
       "submenu": [
         {
-          "url": "/user/company",
+          "url": "/user/company/view-company",
           "name": "View company",
           "slug": "user.company.view-company"
         },
         {
-          "url": "/user/company-selection",
+          "url": "/user/company/selection",
           "name": "Select Company",
-          "slug": "user.proposal.company-selection"
+          "slug": "user.company.selection"
         }
       ]
     }

@@ -16,6 +16,8 @@ use App\Http\Controllers\pages\admin\management\ManageFunding as M_Funding;
 
 //User
 use App\Http\Controllers\pages\user\DashboardController as DashboardUser;
+use App\Http\Controllers\pages\user\ProposalController as U_Proposal;
+use App\Http\Controllers\pages\user\CompanyController as U_Company;
 
 /*
 |--------------------------------------------------------------------------
@@ -93,7 +95,25 @@ Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
     });
 
 // User
-Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard');
+Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.user');
+
+    Route::prefix('user')->group(function(){
+        // Proposal
+        Route::prefix('proposal')->controller(U_Proposal::class)->group(function(){
+            Route::get('/view-proposal', 'view_proposal')->name('user.proposal.view-proposal');
+            Route::get('/view-proposal/show/fund/{id}', 'show_fund')->name('user.proposal.view-proposal.show.fund');
+            Route::post('/view-proposal/fund/{id}', 'fund')->name('user.proposal.view-proposal.fund');
+            Route::get('/view-proposal/download/{id}', 'download')->name('user.proposal.view-proposal.download');
+
+            Route::get('/my-proposal', 'my_proposal')->name('user.proposal.my-proposal');
+        });
+
+        // Company
+        Route::prefix('company')->controller(U_Company::class)->group(function(){
+            Route::get('/view-company', 'view_company')->name('user.company.view-company');
+            Route::get('/selection', 'company_selection')->name('user.company.selection');
+        });
+    });
 
 
 // locale
