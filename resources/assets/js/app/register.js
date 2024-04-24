@@ -4,7 +4,7 @@
 document.addEventListener('DOMContentLoaded', function (e) {
   (function () {
 
-    FormValidation.formValidation(document.getElementById('addUserForm'), {
+    FormValidation.formValidation(document.getElementById('formAuthentication'), {
       fields: {
         name: {
           validators: {
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         trigger: new FormValidation.plugins.Trigger(),
         bootstrap5: new FormValidation.plugins.Bootstrap5({
           eleValidClass: '',
-          rowSelector: '.col-12'
+          rowSelector: '.mb-3'
         }),
         autoFocus: new FormValidation.plugins.AutoFocus(),
         submitButton: new FormValidation.plugins.SubmitButton(),

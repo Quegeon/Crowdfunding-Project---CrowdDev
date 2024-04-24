@@ -32,7 +32,7 @@ class DummySeeder extends Seeder
             'password' => bcrypt('12345678'),
             'encrypt_view' => encrypt('12345678'),
             'email' => 'dummyuser1@crowddev.id',
-            'payment_credential' => '123456'
+            'payment_credential' => bcrypt('123456')
         ]);
 
         User::create([
@@ -42,7 +42,7 @@ class DummySeeder extends Seeder
             'password' => bcrypt('12345678'),
             'encrypt_view' => encrypt('12345678'),
             'email' => 'dummyuser2@crowddev.id',
-            'payment_credential' => '123456'
+            'payment_credential' => bcrypt('123456')
         ]);
 
         Company::create([

@@ -46,23 +46,7 @@
   
       <div class="w-px-400 mx-auto">
         <!-- Logo -->
-        @if (session('error'))
-          <div class="alert alert-danger alert-dismissible" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-          </div>
-        @endif
-
-        @if ($errors->any())
-        <div class="alert alert-danger alert-dismissible mb-5" role="alert">
-          <ul>
-            @foreach ($errors->all() as $err)
-              <li>{{ $err }}</li>
-            @endforeach
-          </ul>
-          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-        @endif
+        @include('_partials.alert')
 
         <div class="app-brand mb-4">
           <a class="app-brand-link gap-2">

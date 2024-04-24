@@ -77,6 +77,9 @@
         },
         payment_credential: {
             validators: {
+              notEmpty: {
+                message: 'Payment Credential field must be filled'
+              },
               stringLength: {
                 min: 6,
                 max: 6,

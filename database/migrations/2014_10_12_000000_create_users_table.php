@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('encrypt_view');
             $table->string('email')->unique();
-            $table->string('payment_credential')->nullable();
+            $table->string('payment_credential');
             $table->timestamps();
         });
     }

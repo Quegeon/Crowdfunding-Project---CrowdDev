@@ -34,7 +34,7 @@ class ManageUser extends Controller
             'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
             'password' => 'required|string|max:20|min:8|regex:/^[a-zA-Z0-9 ]+$/',
             'email' => 'required|string|email|max:50|unique:users,email',
-            'payment_credential' => 'nullable|numeric|digits:6|regex:/^[0-9]+$/'
+            'payment_credential' => 'required|numeric|digits:6|regex:/^[0-9]+$/'
         ]);
 
         if ($validator->fails()) {
@@ -83,7 +83,7 @@ class ManageUser extends Controller
                 'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
                 'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
                 'email' => 'required|string|email|max:50',
-                'payment_credential' => 'nullable|numeric|digits:6|regex:/^[0-9]+$/'
+                'payment_credential' => 'required|numeric|digits:6|regex:/^[0-9]+$/'
             ]);
 
         } else {
@@ -91,7 +91,7 @@ class ManageUser extends Controller
                 'name' => 'required|string|max:255|regex:/^[a-zA-Zs ]+$/',
                 'username' => 'required|string|max:30|min:6|regex:/^[a-zA-Z0-9 ]+$/',
                 'email' => 'required|string|email|max:50|unique:users,email',
-                'payment_credential' => 'nullable|numeric|digits:6|regex:/^[0-9]+$/'
+                'payment_credential' => 'required|numeric|digits:6|regex:/^[0-9]+$/'
             ]);
         }
 
