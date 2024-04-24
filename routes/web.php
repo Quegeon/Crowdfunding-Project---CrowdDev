@@ -6,6 +6,9 @@ use App\Http\Controllers\pages\MiscError;
 use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\authentications\RegisterBasic;
 
+// Login
+use App\Http\Controllers\pages\LoginController as Login;
+
 // Admin
 use App\Http\Controllers\pages\admin\DashboardController as DashboardAdmin;
 use App\Http\Controllers\pages\admin\management\ManageAdmin as M_Admin;
@@ -30,9 +33,17 @@ use App\Http\Controllers\pages\user\CompanyController as U_Company;
 |
 */
 
+// Login & Register
+Route::get('/', [Login::class, 'index'])->name('login');
+Route::post('/postlogin', [Login::class, 'postlogin'])->name('login.post');
+Route::get('/logout', [Login::class, 'logout'])->name('logout');
+Route::get('/register', [Login::class, 'register'])->name('register');
+Route::post('/postregister', [Login::class, 'postregister'])->name('register.post');
+Route::get('/register-company', [Login::class, 'register_company'])->name('register.company');
+Route::post('/postregister-company', [Login::class, 'postregister_company'])->name('register.company.post');
 
 // Admin
-Route::get('/', [DashboardAdmin::class, 'index'])->name('dashboard');
+Route::get('/dashboard-admin', [DashboardAdmin::class, 'index'])->name('dashboard.admin');
 
     // Management
     Route::prefix('management')->group(function(){

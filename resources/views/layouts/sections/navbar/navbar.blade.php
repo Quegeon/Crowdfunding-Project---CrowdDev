@@ -1,6 +1,19 @@
 @php
 $containerNav = ($configData['contentLayout'] === 'compact') ? 'container-xxl' : 'container-fluid';
 $navbarDetached = ($navbarDetached ?? '');
+
+if (Auth::guard('web')->check()) {
+  $username = Auth::user()->username;
+  $level = 'Client & Sponsor';
+
+} elseif (Auth::guard('admin')->check()) {
+  $username = Auth::guard('admin')->user()->username;
+  $level = 'Admin';
+
+} else {
+  $username = Auth::guard('company')->user()->username;
+  $level - 'Company';
+}
 @endphp
 
 <!-- Navbar -->
@@ -43,27 +56,25 @@ $navbarDetached = ($navbarDetached ?? '');
           <li class="nav-item navbar-dropdown dropdown-user dropdown">
             <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
               <div class="avatar avatar-online">
-                <img src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('assets/img/avatars/1.png') }}" alt class="h-auto rounded-circle">
+                <img src="{{ asset('assets/img/crowdfunding/user.png') }}" alt class="h-auto rounded-circle">
               </div>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <a class="dropdown-item" href="{{ Route::has('profile.show') ? route('profile.show') : 'javascript:void(0);' }}">
+                <a class="dropdown-item">
                   <div class="d-flex">
                     <div class="flex-shrink-0 me-3">
                       <div class="avatar avatar-online">
-                        <img src="{{ Auth::user() ? Auth::user()->profile_photo_url : asset('assets/img/avatars/1.png') }}" alt class="h-auto rounded-circle">
+                        <img src="{{ asset('assets/img/crowdfunding/user.png') }}" alt class="h-auto rounded-circle">
                       </div>
                     </div>
                     <div class="flex-grow-1">
                       <span class="fw-medium d-block">
-                        @if (Auth::check())
-                        {{ Auth::user()->name }}
-                        @else
-                        John Doe
-                        @endif
+                        {{ $username }}
                       </span>
-                      <small class="text-muted">Admin</small>
+                      <small class="text-muted">
+                        {{ $level }}
+                      </small>
                     </div>
                   </div>
                 </a>
@@ -71,30 +82,26 @@ $navbarDetached = ($navbarDetached ?? '');
               <li>
                 <div class="dropdown-divider"></div>
               </li>
-              <li>
-                <a class="dropdown-item" href="{{ Route::has('profile.show') ? route('profile.show') : 'javascript:void(0);' }}">
-                  <i class="ti ti-user-check me-2 ti-sm"></i>
-                  <span class="align-middle">My Profile</span>
-                </a>
-              </li>
-              @if (Auth::check() && Laravel\Jetstream\Jetstream::hasApiFeatures())
+              @if ($level == 'Company')
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <i class="ti ti-user-check me-2 ti-sm"></i>
+                    <span class="align-middle">Company Profile</span>
+                  </a>
+                </li>
+                <li>
+                  <div class="dropdown-divider"></div>
+                </li>
+              @endif
+              {{-- @if (Auth::check() && Laravel\Jetstream\Jetstream::hasApiFeatures())
               <li>
                 <a class="dropdown-item" href="{{ route('api-tokens.index') }}">
                   <i class='ti ti-key me-2 ti-sm'></i>
                   <span class="align-middle">API Tokens</span>
                 </a>
               </li>
-              @endif
-              <li>
-                <a class="dropdown-item" href="javascript:void(0);">
-                  <span class="d-flex align-items-center align-middle">
-                    <i class="flex-shrink-0 ti ti-credit-card me-2 ti-sm"></i>
-                    <span class="flex-grow-1 align-middle">Billing</span>
-                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-label-danger w-px-20 h-px-20">2</span>
-                  </span>
-                </a>
-              </li>
-              @if (Auth::User() && Laravel\Jetstream\Jetstream::hasTeamFeatures())
+              @endif --}}
+              {{-- @if (Auth::User() && Laravel\Jetstream\Jetstream::hasTeamFeatures())
               <li>
                 <div class="dropdown-divider"></div>
               </li>
@@ -130,34 +137,19 @@ $navbarDetached = ($navbarDetached ?? '');
               </li>
               @endif
               @if (Auth::user())
-              @foreach (Auth::user()->allTeams() as $team)
+              @foreach (Auth::user()->allTeams() as $team) --}}
               {{-- Below commented code read by artisan command while installing jetstream. !! Do not remove if you want to use jetstream. --}}
 
               {{-- <x-switchable-team :team="$team" /> --}}
-              @endforeach
+              {{-- @endforeach
               @endif
-              @endif
+              @endif --}}
               <li>
-                <div class="dropdown-divider"></div>
-              </li>
-              @if (Auth::check())
-              <li>
-                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a class="dropdown-item" href="{{ route('logout') }}">
                   <i class='ti ti-logout me-2'></i>
                   <span class="align-middle">Logout</span>
                 </a>
               </li>
-              <form method="POST" id="logout-form" action="{{ route('logout') }}">
-                @csrf
-              </form>
-              @else
-              <li>
-                <a class="dropdown-item" href="{{ Route::has('login') ? route('login') : url('auth/login-basic') }}">
-                  <i class='ti ti-login me-2'></i>
-                  <span class="align-middle">Login</span>
-                </a>
-              </li>
-              @endif
             </ul>
           </li>
           <!--/ User -->

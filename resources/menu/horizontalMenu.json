@@ -1,10 +1,10 @@
 {
   "menu": [
     {
-      "url": "/",
+      "url": "/dashboard-admin",
       "name": "Dashboard Admin",
       "icon": "menu-icon tf-icons ti ti-smart-home",
-      "slug": "dashboard"
+      "slug": "dashboard.admin"
     },
     {
       "name": "Management",
