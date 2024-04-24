@@ -10,6 +10,7 @@ use App\Models\Selection;
 use App\Models\User;
 use App\Models\Vote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -177,7 +178,7 @@ class ManageProposal extends Controller
                 Vote::create([
                     'id' => Str::orderedUuid(),
                     'id_proposal' => $proposal->id,
-                    'id_user' => '9bdb0481-7b6c-424c-b45b-bd05ee3fa4d7', //change to auth
+                    'id_user' => Auth::guard('admin')->user()->id,
                     'id_company' => $validated['id_company'],
                     'is_reject' => false
                 ]);
@@ -280,7 +281,7 @@ class ManageProposal extends Controller
             $vote = new Vote([
                 'id' => Str::orderedUuid(),
                 'id_proposal' => $proposal->id,
-                'id_user' => '9bdb0481-7b6c-424c-b45b-bd05ee3fa4d7', // change to auth
+                'id_user' => Auth::guard('admin')->user()->id,
                 'id_company' => $validated['id_company'],
                 'is_reject' => false
             ]);

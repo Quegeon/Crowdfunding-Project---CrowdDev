@@ -114,8 +114,8 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
             Route::get('/view-proposal', 'view_proposal')->name('user.proposal.view-proposal');
             Route::get('/view-proposal/show/fund/{id}', 'show_fund')->name('user.proposal.view-proposal.show.fund');
             Route::post('/view-proposal/fund/{id}', 'fund')->name('user.proposal.view-proposal.fund');
+            Route::get('/view-proposal/detail/{id}', 'detail')->name('user.proposal.view-proposal.detail');
             Route::get('/view-proposal/download/{id}', 'download')->name('user.proposal.view-proposal.download');
-
             Route::get('/my-proposal', 'my_proposal')->name('user.proposal.my-proposal');
         });
 

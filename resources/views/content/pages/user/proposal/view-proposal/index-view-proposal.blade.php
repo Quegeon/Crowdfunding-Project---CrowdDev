@@ -85,6 +85,70 @@
   </div>
 </div>
 
+<div class="card mt-5">
+  <div class="d-flex justify-content-between">
+      <h5 class="card-header">Your Funding</h5>
+  </div>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead class="table-primary">
+        <tr>
+          <th>#</th>
+          <th>Proposal</th>
+          <th>Document</th>
+          <th>Progress</th>
+          <th class="text-center">Status</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        @foreach ($funding as $f)
+          <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $f->Proposal->title }}</td>
+            <td>{{ $f->Proposal->document }}</td>
+            <td>Rp. {{ number_format($f->Proposal->total_funded,2,',','.') }} / Rp. {{ number_format($f->Proposal->total_target,2,',','.') }}</td>
+            <td class="text-center">
+              @switch($f->Proposal->status)
+                  @case('Funding')
+                      <span class="badge bg-label-primary text-center">Funding</span>
+                      @break
+                  @case('Selection')
+                      <span class="badge bg-label-info text-center">Selection</span>
+                      @break
+                  @case('Voting')
+                      <span class="badge bg-label-dark text-center">Voting</span>
+                      @break
+                  @case('Approval')
+                      <span class="badge bg-label-warning text-center">Approval</span>
+                      @break
+                  @case('Ongoing')
+                      <span class="badge bg-label-success text-center">Ongoing</span>
+                      @break
+                  @case('Confirmation')
+                      <span class="badge bg-label-warning text-center">Confirmation</span>
+                      @break
+                  @case('Done')
+                      <span class="badge bg-label-secondary text-center">Done</span>
+                      @break
+              @endswitch
+            </td>
+            <td>
+              <div class="d-flex dropdown justify-content-center">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
+                <div class="dropdown-menu">
+                  <button type="button" class="dropdown-item btn-detail" data-href="{{ route('user.proposal.view-proposal.detail', $f->id_proposal) }}"><i class="ti ti-search me-1"></i> Detail</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+</div>
+
 @include('content.pages.user.proposal.view-proposal.component.modal-user-fund')
+@include('content.pages.user.proposal.view-proposal.component.modal-user-fund-detail')
 
 @endsection
