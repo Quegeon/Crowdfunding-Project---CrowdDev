@@ -1,15 +1,3 @@
-<style>
-  /* Change background color on hover */
-.select2-results__option:hover {
-    background-color: #f0f0f0; /* Change to desired color */
-}
-
-/* Change background color on selection */
-.select2-results__option[aria-selected=true] {
-    background-color: #e6e6e6; /* Change to desired color */
-}
-</style>
-
 <div class="modal fade" id="addCompany" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-simple">
       <div class="modal-content p-3 p-md-5">
