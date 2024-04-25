@@ -118,8 +118,19 @@ class ProposalController extends Controller
         }
 
         $validated = $validator->validated();
-
         $new_fund = $validated['fund'] + $proposal->total_funded;
+
+        if ($proposal->id_user == Auth::user()->id) {
+            $exist_other_fund = Funding::where('id_proposal', $proposal->id)
+                ->where('id_user', '!=', $proposal->id_user)
+                ->count();
+
+            if ($exist_other_fund == 0 && $new_fund >= $proposal->total_target) {
+                return back()
+                    ->with('error',"Client can't do the funding process alone")
+                    ->withInput();
+            }
+        }
 
         if ($new_fund > $proposal->total_target) {
             return back()

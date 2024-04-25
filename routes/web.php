@@ -116,9 +116,6 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
             Route::post('/view-proposal/fund/{id}', 'fund')->name('user.proposal.view-proposal.fund');
             Route::get('/view-proposal/detail-funding/{id}', 'detail_funding_vp')->name('user.proposal.view-proposal.detail-funding');
             Route::get('/view-proposal/download/{id}', 'download')->name('user.proposal.view-proposal.download');
-            // Route::get('/view-proposal/vote/detail/{id}', 'detail-vote')->name('user.proposal.view-proposal.vote.detail');
-            // Route::get('/view-proposal/vote/approve/{id}', 'approve')->name('user.proposal.view-proposal.vote.approve');
-            // Route::get('/view-proposal/vote/reject/{id}', 'reject')->name('user.proposal.view-proposal.vote.reject');
             
             Route::get('/my-proposal', 'my_proposal')->name('user.proposal.my-proposal');
             Route::post('/my-proposal/store', 'store_proposal')->name('user.proposal.my-proposal.store');
@@ -136,7 +133,10 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
         Route::prefix('company')->controller(U_Company::class)->group(function(){
             Route::get('/view-company', 'view_company')->name('user.company.view-company');
             Route::get('/view-company/detail/{id}', 'detail_company')->name('user.company.view-company.detail');
+
             Route::get('/selection', 'company_selection')->name('user.company.selection');
+            Route::get('/selection/vote/approve/{id}', 'approve')->name('user.company.selection.vote.approve');
+            Route::get('/selection/vote/reject/{id}', 'reject')->name('user.company.selection.vote.reject');
         });
     });
 
