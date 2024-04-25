@@ -73,7 +73,7 @@
               <div class="d-flex dropdown justify-content-center">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                 <div class="dropdown-menu">
-                  <button type="button" class="dropdown-item btn-fund" data-href="{{ route('user.proposal.view-proposal.show.fund', $p->id) }}"><i class="ti ti-wallet me-1"></i> Fund</button>
+                  <button type="button" class="dropdown-item btn-fund" data-href="{{ route('user.proposal.view-proposal.show.fund', ['id' => $p->id, 'is_view_proposal' => true]) }}"><i class="ti ti-wallet me-1"></i> Fund</button>
                   <a href="{{ route('user.proposal.view-proposal.download', $p->id) }}" class="dropdown-item"><i class="ti ti-download me-1"></i> Download</a>
                 </div>
               </div>

@@ -41,10 +41,6 @@
                 <input type="text" class="form-control" value="{{ $proposal->title }}" disabled />
             </div>
             <div class="col-sm-6">
-                <label class="form-label">Client</label>
-                <input type="text" class="form-control" value="{{ $proposal->User->username }}" disabled />
-            </div>
-            <div class="col-sm-6">
                 <label class="form-label">Document</label>
                 <input type="text" class="form-control" value="{{ $proposal->document }}" disabled />
             </div>
@@ -81,7 +77,7 @@
         <div id="funding-details" class="content">
           <div class="row g-3">
             <div class="col-sm-12">
-              <table class="table">
+              <table class="table modal-datatable">
                 <thead class="table-primary">
                   <tr>
                     <th>#</th>
@@ -113,7 +109,7 @@
         <div id="voting-details" class="content">
           <div class="row g-3">
             <div class="col-sm-12">
-              <table class="table">
+              <table class="table modal-datatable">
                 <thead class="table-primary">
                   <tr>
                     <th>#</th>

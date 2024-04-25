@@ -5,7 +5,9 @@
 @section('vendor-style')
   @vite([
     'resources/assets/vendor/libs/@form-validation/form-validation.scss',
-    'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss'
+    'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss',
+    'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
+    'resources/assets/vendor/libs/bs-stepper/bs-stepper.scss'
   ])
 @endsection
 
@@ -15,13 +17,16 @@
     'resources/assets/vendor/libs/@form-validation/bootstrap5.js',
     'resources/assets/vendor/libs/@form-validation/auto-focus.js',
     'resources/assets/vendor/libs/jquery/jquery.js',
-    'resources/assets/vendor/libs/sweetalert2/sweetalert2.js'
+    'resources/assets/vendor/libs/sweetalert2/sweetalert2.js',
+    'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
+    'resources/assets/vendor/libs/bs-stepper/bs-stepper.js'
   ])
 @endsection
 
 @section('page-script')
     @vite([
-        'resources/assets/js/user/my-proposal/modal-my-add-proposal.js'
+        'resources/assets/js/user/my-proposal/modal-my-add-proposal.js',
+        'resources/assets/js/user/my-proposal/general-my-proposal.js'
     ])
 @endsection
 
@@ -53,7 +58,7 @@
           <th>#</th>
           <th>Title</th>
           <th>Document</th>
-          <th>Compant</th>
+          <th>Company</th>
           <th>Progress</th>
           <th class="text-center">Status</th>
           <th class="text-center">Actions</th>
@@ -96,7 +101,10 @@
               <div class="d-flex dropdown justify-content-center">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                 <div class="dropdown-menu">
-                  <button type="button" class="dropdown-item btn-fund" data-href="{{ route('user.proposal.view-proposal.show.fund', $p->id) }}"><i class="ti ti-wallet me-1"></i> Fund</button>
+                    <button type="button" class="dropdown-item btn-detail" data-href="{{ route('user.proposal.my-proposal.detail', $p->id) }}"><i class="ti ti-search me-1"></i> Detail</button>
+                    @if ($p->status == 'Funding')
+                        <button type="button" class="dropdown-item btn-fund" data-href="{{ route('user.proposal.my-proposal.show.fund', ['id' => $p->id, 'is_view_proposal' => false]) }}"><i class="ti ti-wallet me-1"></i> Fund</button>
+                    @endif
                 </div>
               </div>
             </td>
@@ -108,5 +116,6 @@
 </div>
 
 @include('content.pages.user.proposal.my-proposal.component.modal-my-add-proposal')
+@include('content.pages.user.proposal.my-proposal.component.modal-my-detail-proposal')
 
 @endsection

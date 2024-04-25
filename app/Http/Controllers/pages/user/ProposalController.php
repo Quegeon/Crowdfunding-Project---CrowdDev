@@ -5,6 +5,7 @@ namespace App\Http\Controllers\pages\user;
 use App\Http\Controllers\Controller;
 use App\Models\Funding;
 use App\Models\Proposal;
+use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -41,16 +42,6 @@ class ProposalController extends Controller
         //     ->get();
 
         return view('content.pages.user.proposal.view-proposal.index-view-proposal', compact('proposal','funding'));
-    }
-
-    public function my_proposal()
-    {
-        $proposal = Proposal::select(['id','title','document','id_company','total_funded','total_target','status'])
-            ->where('id_user', Auth::user()->id)
-            ->orderBy('created_at','desc')
-            ->get();
-
-        return view('content.pages.user.proposal.my-proposal.index-my-proposal', compact('proposal'));
     }
 
     public function store_proposal()
@@ -100,10 +91,15 @@ class ProposalController extends Controller
         return Storage::download('proposal/' . $id . '.pdf', $proposal->document);
     }
 
-    public function show_fund($id)
+    public function show_fund($id, $is_view_proposal)
     {
         $proposal = Proposal::findOrFail($id, ['id','title','total_target','total_funded']);
-        $render = view('content.pages.user.proposal.view-proposal.component.content-fund', compact('proposal'));
+        if ($is_view_proposal) {
+            $render = view('content.pages.user.proposal.view-proposal.component.content-fund', compact('proposal'));
+
+        } else {
+            $render = view('content.pages.user.proposal.view-proposal.component.content-fund', compact('proposal'));
+        }
         return response()->json(['data' => $render->render()]);
     }
 
@@ -153,17 +149,33 @@ class ProposalController extends Controller
         }
     }
 
-    public function detail_funding($id, $is_view_proposal)
+    public function detail_funding_vp($id)
     {
         $funding = Funding::select(['id','id_user','fund','created_at'])
             ->where('id_proposal', $id)
             ->get();
-        if ($is_view_proposal) {
-            $render = view('content.pages.user.proposal.view-proposal.component.content-fund-detail', compact('funding'));
+        $render = view('content.pages.user.proposal.view-proposal.component.content-fund-detail', compact('funding'));
+        return response()->json(['data' => $render->render()]);
+    }
 
-        } else {
-            $render = view('content.pages.user.proposal.view-proposal.component.content-fund-detail', compact('funding'));
-        }
+    // My Proposal
+    public function my_proposal()
+    {
+        $proposal = Proposal::select(['id','title','document','id_company','total_funded','total_target','status'])
+            ->where('id_user', Auth::user()->id)
+            ->orderBy('created_at','desc')
+            ->get();
+
+        return view('content.pages.user.proposal.my-proposal.index-my-proposal', compact('proposal'));
+    }
+
+    public function detail_mp($id)
+    {
+        $proposal = Proposal::findOrFail($id, ['id','title','document','total_target','total_funded','id_company']);
+        $funding = Funding::select(['id_user','fund','created_at'])->where('id_proposal', $id)->get();
+        $vote = Vote::select(['id_user','id_company','created_at','is_reject'])->where('id_proposal', $id)->get();
+        
+        $render = view('content.pages.user.proposal.my-proposal.component.content-detail', compact('proposal','funding','vote'));
         return response()->json(['data' => $render->render()]);
     }
 }

@@ -112,9 +112,9 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
         // Proposal
         Route::prefix('proposal')->controller(U_Proposal::class)->group(function(){
             Route::get('/view-proposal', 'view_proposal')->name('user.proposal.view-proposal');
-            Route::get('/view-proposal/show/fund/{id}', 'show_fund')->name('user.proposal.view-proposal.show.fund');
+            Route::get('/view-proposal/show/fund/{id}/{is_view_proposal}', 'show_fund')->name('user.proposal.view-proposal.show.fund');
             Route::post('/view-proposal/fund/{id}', 'fund')->name('user.proposal.view-proposal.fund');
-            Route::get('/view-proposal/detail-funding/{id}/{is_view_proposal}', 'detail_funding')->name('user.proposal.view-proposal.detail-funding');
+            Route::get('/view-proposal/detail-funding/{id}', 'detail_funding_vp')->name('user.proposal.view-proposal.detail-funding');
             Route::get('/view-proposal/download/{id}', 'download')->name('user.proposal.view-proposal.download');
             // Route::get('/view-proposal/vote/detail/{id}', 'detail-vote')->name('user.proposal.view-proposal.vote.detail');
             // Route::get('/view-proposal/vote/approve/{id}', 'approve')->name('user.proposal.view-proposal.vote.approve');
@@ -122,9 +122,9 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
             
             Route::get('/my-proposal', 'my_proposal')->name('user.proposal.my-proposal');
             Route::post('/my-proposal/store', 'store_proposal')->name('user.proposal.my-proposal.store');
-            Route::get('/my-proposal/detail/{id}', 'detail')->name('user.proposal.my-proposal.detail');
-            Route::get('/my-proposal/detail_funding/{id}/{is_view_proposal}', 'detail_funding')->name('user.proposal.my-proposal.detail-funding');
-            Route::get('/my-proposal/detail_vote/{id}', 'detail_vote')->name('user.proposal.my-proposal.detail-vote');
+            Route::get('/my-proposal/show/fund/{id}/{is_view_proposal}', 'show_fund')->name('user.proposal.my-proposal.show.fund');
+            Route::post('/my-proposal/fund/{id}', 'fund')->name('user.proposal.my-proposal.fund');
+            Route::get('/my-proposal/detail/{id}', 'detail_mp')->name('user.proposal.my-proposal.detail');
         });
 
         // Company
