@@ -135,6 +135,7 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
         // Company
         Route::prefix('company')->controller(U_Company::class)->group(function(){
             Route::get('/view-company', 'view_company')->name('user.company.view-company');
+            Route::get('/view-company/detail/{id}', 'detail_company')->name('user.company.view-company.detail');
             Route::get('/selection', 'company_selection')->name('user.company.selection');
         });
     });
