@@ -54,8 +54,9 @@
           <tr>
             <th>#</th>
             <th>Title</th>
-            <th>Username</th>
-            <th>Document</th>
+            <th>Client</th>
+            <th>Company Selected</th>
+            <th>Work Field</th>
             <th class="text-center">Vote</th>
             <th class="text-center">Actions</th>
           </tr>
@@ -66,7 +67,8 @@
               <td>{{ $loop->iteration }}</td>
               <td>{{ $p->title }}</td>
               <td>{{ $p->User->username }}</td>
-              <td>{{ $p->document }}</td>
+              <td>{{ $p->Company->company_name }} ({{ $p->Company->country }})</td>
+              <td>{{ $p->Company->work_field }}</td>
               <td class="text-center">
                 <a href="{{ route('user.company.selection.vote.approve', $p->id) }}" class="btn btn-outline-success bg-label-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Approve"><i class="fa fa-check"></i></a>
                 <a href="{{ route('user.company.selection.vote.reject', $p->id) }}" class="btn btn-outline-danger bg-label-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Reject"><i class="fa fa-times"></i></a>  

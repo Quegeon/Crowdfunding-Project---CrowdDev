@@ -45,6 +45,46 @@ class DummySeeder extends Seeder
             'payment_credential' => bcrypt('123456')
         ]);
 
+        User::create([
+            'id' => Str::orderedUuid(),
+            'name' => 'Bintang Avli',
+            'username' => 'mavistar1',
+            'password' => bcrypt('12345678'),
+            'encrypt_view' => encrypt('12345678'),
+            'email' => 'dummyuser3@crowddev.id',
+            'payment_credential' => bcrypt('123456')
+        ]);
+
+        User::create([
+            'id' => Str::orderedUuid(),
+            'name' => 'Adun Ghivari',
+            'username' => 'adunghivari1',
+            'password' => bcrypt('12345678'),
+            'encrypt_view' => encrypt('12345678'),
+            'email' => 'dummyuser4@crowddev.id',
+            'payment_credential' => bcrypt('123456')
+        ]);
+
+        User::create([
+            'id' => Str::orderedUuid(),
+            'name' => 'Yasel Disini',
+            'username' => 'yaseldisini1',
+            'password' => bcrypt('12345678'),
+            'encrypt_view' => encrypt('12345678'),
+            'email' => 'dummyuser5@crowddev.id',
+            'payment_credential' => bcrypt('123456')
+        ]);
+
+        User::create([
+            'id' => Str::orderedUuid(),
+            'name' => 'Daffa Praditia',
+            'username' => 'daffap1',
+            'password' => bcrypt('12345678'),
+            'encrypt_view' => encrypt('12345678'),
+            'email' => 'dummyuser6@crowddev.id',
+            'payment_credential' => bcrypt('123456')
+        ]);
+
         Company::create([
             'id' => Str::orderedUuid(),
             'username' => 'companyone',

@@ -37,11 +37,6 @@ class ProposalController extends Controller
             ->orderBy('created_at','desc')
             ->get()
             ->unique('id_proposal');
-        // $vote = Proposal::select(['id','document'])
-        //     ->where('status', 'Voting')
-        //     ->whereNotIn('id', $not_client)
-        //     ->orderBy('created_at','desc')
-        //     ->get();
 
         return view('content.pages.user.proposal.view-proposal.index-view-proposal', compact('proposal','funding'));
     }
@@ -186,7 +181,7 @@ class ProposalController extends Controller
     {
         $proposal = Proposal::findOrFail($id, ['id','title','document','total_target','total_funded','id_company']);
         $funding = Funding::select(['id_user','fund','created_at'])->where('id_proposal', $id)->orderBy('created_at','desc')->get();
-        $vote = Vote::select(['id_user','id_company','created_at','is_reject'])->where('id_proposal', $id)->orderBy('created_at','desc')->get();
+        $vote = Vote::select(['id_user','created_at','is_reject'])->where('id_proposal', $id)->orderBy('created_at','desc')->get();
 
         $render = view('content.pages.user.proposal.my-proposal.component.content-detail', compact('proposal','funding','vote'));
         return response()->json(['data' => $render->render()]);

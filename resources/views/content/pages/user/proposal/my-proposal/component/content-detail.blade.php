@@ -114,7 +114,6 @@
                   <tr>
                     <th>#</th>
                     <th>Participant</th>
-                    <th>Company</th>
                     <th>Date</th>
                     <th class="text-center">Vote</th>
                   </tr>
@@ -124,7 +123,6 @@
                     <tr>
                       <td>{{ $loop->iteration }}</td>
                       <td>{{ $v->User->username }}</td>
-                      <td>{{ $v->Company->company_name }}</td>
                       <td>{{ $f->created_at->toDateString() }}</td>
                       <td class="text-center">
                         @if ($v->is_reject)

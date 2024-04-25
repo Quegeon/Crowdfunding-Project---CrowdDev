@@ -13,4 +13,14 @@ class Vote extends Model
     protected $fillable = ['id','id_proposal','id_user','id_company','is_reject'];
     protected $keyType = 'string';
     public $incrementing = false;
+
+    public function User()
+    {
+        return $this->belongsTo(User::class, 'id_user', 'id');
+    }
+
+    public function Company()
+    {
+        return $this->belongsTo(Company::class, 'id_company', 'id');
+    }
 }

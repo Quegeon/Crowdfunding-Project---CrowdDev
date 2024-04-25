@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Funding;
 use App\Models\Proposal;
+use App\Models\Selection;
 use App\Models\Vote;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class CompanyController extends Controller
 {
@@ -34,17 +36,14 @@ class CompanyController extends Controller
 
     public function company_selection()
     {
-        $not_client = Proposal::where('id_user', Auth::user()->id)->pluck('id');
-        $not_voted = Vote::where('id_user', Auth::user()->id)->pluck('id_proposal');
-        $my_funding = Funding::where('id_user', Auth::user()->id)
-            ->whereNotIn('id_proposal', $not_client->toArray())
-            ->pluck('id_proposal')
-            ->unique('id_proposal');
+        $voted = Vote::where('id_user', Auth::user()->id)->pluck('id_proposal');
+        $funded = Funding::where('id_user', Auth::user()->id)->pluck('id_proposal')->unique();
 
-        $proposal = Proposal::select(['id','id_user','title','document'])
+        $proposal = Proposal::select(['id','id_user','title','id_company'])
             ->where('status', 'Voting')
-            ->whereIn('id', $my_funding->toArray())
-            ->whereNotIn('id', $not_voted->toArray())
+            ->where('id_user', '!=', Auth::user()->id)
+            ->whereIn('id', $funded->toArray())
+            ->whereNotIn('id', $voted->toArray())
             ->get();
 
         return view('content.pages.user.company.select-company.index-select-company', compact('proposal'));
@@ -53,11 +52,104 @@ class CompanyController extends Controller
     public function approve($id)
     {
         $proposal = Proposal::findOrFail($id);
-        $count_sponsor = Funding::where('id_proposal', $proposal->id)->count();
+
+        $count_sponsor = Funding::where('id_proposal', $proposal->id)
+            ->where('id_user', '!=', $proposal->id_user)
+            ->count();
+
+        try {
+            if ($count_sponsor < 3) {
+                $vote = new Vote([
+                    'id' => Str::orderedUuid(),
+                    'id_proposal' => $proposal->id,
+                    'id_user' => Auth::user()->id,
+                    'id_company' => $proposal->id_company,
+                    'is_reject' => false
+                ]);
+                
+                $vote->save();
+
+                $proposal->update(['status' => 'Approval']);
+
+            } else {
+                $vote = new Vote([
+                    'id' => Str::orderedUuid(),
+                    'id_proposal' => $proposal->id,
+                    'id_user' => Auth::user()->id,
+                    'id_company' => $proposal->id_company,
+                    'is_reject' => false
+                ]);
+
+                $vote->save();
+
+                $calc = floor($count_sponsor / 2);
+                $count_vote = Vote::where('id_proposal', $proposal->id)->where('is_reject', false)->count();
+
+                if ($calc == $count_vote) {
+                    $proposal->update(['status' => 'Approval']);
+                }
+            }
+
+            return back()
+                ->with('success','Successfully Approve Company Selection');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
     }
 
     public function reject($id)
     {
-        
+        $proposal = Proposal::findOrFail($id);
+
+        $count_sponsor = Funding::where('id_proposal', $proposal->id)
+            ->where('id_user', '!=', $proposal->id_user)
+            ->count();
+
+        try {
+            if ($count_sponsor < 3) {
+                Vote::where('id_proposal', $proposal->id)->delete();
+
+                Selection::where('id_proposal', $proposal->id)->update(['is_rejected' => true]);
+
+                $proposal->update([
+                    'id_company' => null,
+                    'status' => 'Selection'
+                ]);
+
+            } else {
+                $vote = new Vote([
+                    'id' => Str::orderedUuid(),
+                    'id_proposal' => $proposal->id,
+                    'id_user' => Auth::user()->id,
+                    'id_company' => $proposal->id_company,
+                    'is_reject' => true
+                ]);
+
+                $vote->save();
+
+                $calc = ceil($count_sponsor / 2);
+                $count_vote = Vote::where('id_proposal', $proposal->id)->where('is_reject', true)->count();
+
+                if ($calc == $count_vote) {
+                    Vote::where('id_proposal', $proposal->id)->delete();
+
+                    Selection::where('id_proposal', $proposal->id)->update(['is_rejected' => true]);
+    
+                    $proposal->update([
+                        'id_company' => null,
+                        'status' => 'Selection'
+                    ]);
+                }
+            }
+
+            return back()
+                ->with('success','Successfully Reject Company Selection');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
     }
 }
