@@ -122,6 +122,9 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
             
             Route::get('/my-proposal', 'my_proposal')->name('user.proposal.my-proposal');
             Route::post('/my-proposal/store', 'store_proposal')->name('user.proposal.my-proposal.store');
+            Route::get('/my-proposal/show/edit/{id}', 'show_edit')->name('user.proposal.my-proposal.show.edit');
+            Route::put('/my-proposal/update/proposal/{id}', 'update_proposal')->name('user.proposal.my-proposal.update');
+            Route::get('/my-proposal/destroy/{id}', 'destroy_proposal')->name('user.proposal.my-proposal.destroy');
             Route::get('/my-proposal/show/fund/{id}/{is_view_proposal}', 'show_fund')->name('user.proposal.my-proposal.show.fund');
             Route::post('/my-proposal/fund/{id}', 'fund')->name('user.proposal.my-proposal.fund');
             Route::get('/my-proposal/detail/{id}', 'detail_mp')->name('user.proposal.my-proposal.detail');

@@ -5,7 +5,7 @@ $configData = Helper::appClasses();
 
 @extends('layouts/layoutMaster')
 
-@section('title', 'Multi Steps Sign-up - Pages')
+@section('title', 'Register Company')
 
 @section('vendor-style')
 @vite([

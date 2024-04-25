@@ -24,8 +24,8 @@
     @if ($proposal->status == 'Funding')
         <div class="col-12">
             <div class="d-flex justify-content-between align-content-center">
-                <label class="form-label">Total</label>
-                <p style="width: 90%" class="text-muted small justify-content-start mb-0">( Total Target can't be changed when status is not Funding )</p>
+                <label class="form-label">Total Target</label>
+                <p style="width: 85%" class="text-muted small justify-content-start mb-0">( Total Target can't be changed when status is not Funding )</p>
             </div>
             <div class="input-group">
                 <span class="input-group-text" id="basic-addon11">Rp</span>

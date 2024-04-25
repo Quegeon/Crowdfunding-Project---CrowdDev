@@ -103,7 +103,11 @@
                 <div class="dropdown-menu">
                     <button type="button" class="dropdown-item btn-detail" data-href="{{ route('user.proposal.my-proposal.detail', $p->id) }}"><i class="ti ti-search me-1"></i> Detail</button>
                     @if ($p->status == 'Funding')
-                        <button type="button" class="dropdown-item btn-fund" data-href="{{ route('user.proposal.my-proposal.show.fund', ['id' => $p->id, 'is_view_proposal' => false]) }}"><i class="ti ti-wallet me-1"></i> Fund</button>
+                      <button type="button" class="dropdown-item btn-fund" data-href="{{ route('user.proposal.my-proposal.show.fund', ['id' => $p->id, 'is_view_proposal' => 0]) }}"><i class="ti ti-wallet me-1"></i> Fund</button>
+                      @if($p->status == 'Funding' && $p->total_funded == 0)
+                        <button type="button" class="dropdown-item btn-edit" data-href="{{ route('user.proposal.my-proposal.show.edit', $p->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
+                        <button type="button" class="dropdown-item btn-delete" data-href="{{ route('user.proposal.my-proposal.destroy', $p->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
+                      @endif
                     @endif
                 </div>
               </div>
@@ -117,5 +121,7 @@
 
 @include('content.pages.user.proposal.my-proposal.component.modal-my-add-proposal')
 @include('content.pages.user.proposal.my-proposal.component.modal-my-detail-proposal')
+@include('content.pages.user.proposal.my-proposal.component.modal-my-fund')
+@include('content.pages.user.proposal.my-proposal.component.modal-my-edit-proposal')
 
 @endsection

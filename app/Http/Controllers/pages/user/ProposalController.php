@@ -5,6 +5,7 @@ namespace App\Http\Controllers\pages\user;
 use App\Http\Controllers\Controller;
 use App\Models\Funding;
 use App\Models\Proposal;
+use App\Models\Selection;
 use App\Models\Vote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -98,7 +99,7 @@ class ProposalController extends Controller
             $render = view('content.pages.user.proposal.view-proposal.component.content-fund', compact('proposal'));
 
         } else {
-            $render = view('content.pages.user.proposal.view-proposal.component.content-fund', compact('proposal'));
+            $render = view('content.pages.user.proposal.my-proposal.component.content-fund', compact('proposal'));
         }
         return response()->json(['data' => $render->render()]);
     }
@@ -172,10 +173,89 @@ class ProposalController extends Controller
     public function detail_mp($id)
     {
         $proposal = Proposal::findOrFail($id, ['id','title','document','total_target','total_funded','id_company']);
-        $funding = Funding::select(['id_user','fund','created_at'])->where('id_proposal', $id)->get();
-        $vote = Vote::select(['id_user','id_company','created_at','is_reject'])->where('id_proposal', $id)->get();
-        
+        $funding = Funding::select(['id_user','fund','created_at'])->where('id_proposal', $id)->orderBy('created_at','desc')->get();
+        $vote = Vote::select(['id_user','id_company','created_at','is_reject'])->where('id_proposal', $id)->orderBy('created_at','desc')->get();
+
         $render = view('content.pages.user.proposal.my-proposal.component.content-detail', compact('proposal','funding','vote'));
         return response()->json(['data' => $render->render()]);
+    }
+
+    public function destroy_proposal($id)
+    {
+        $proposal = Proposal::findOrFail($id);
+
+        try {
+            $proposal->delete();
+            Funding::where('id_proposal', $id)->delete();
+            Selection::where('id_proposal', $id)->delete();
+            Vote::where('id_proposal', $id)->delete();
+
+            Storage::disk('local')->delete('proposal/' . $id . '.pdf');
+
+            return back()
+                ->with('success', 'Successfully Delete Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
+
+    public function show_edit($id)
+    {
+        $proposal = Proposal::findOrFail($id, ['id','title','total_target','status']);
+        $render = view('content.pages.user.proposal.my-proposal.component.content-edit', compact('proposal'));
+
+        return response()->json(['data' => $render->render()]);
+    }
+
+    public function update_proposal($id)
+    {
+        $proposal = Proposal::findOrFail($id);
+
+        $validator = Validator::make($this->request->all(), [
+            'title' => 'required|string|min:6|max:100',
+            'document' => 'nullable|file|max:10240|mimetypes:application/pdf',
+            'total_target' => 'required|numeric|digits_between:4,10'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        try {
+            if ($this->request->hasFile('document')) {
+                $file = $this->request->file('document');
+
+                Storage::disk('local')->delete('proposal/' . $id . '.pdf');
+                $file->storeAs('proposal', $id . '.pdf', 'local');
+
+                $proposal->document = $file->getClientOriginalName();
+            };
+
+            $proposal->title = $validated['title'];
+
+            if ($validated['total_target'] < $proposal->total_funded) {
+                return back()
+                    ->with('error','Total Target cant go below Total Funded amount');
+
+            } elseif ($validated['total_target'] == $proposal->total_funded) {
+                $proposal->status = 'Selection';
+            }
+
+            $proposal->total_target = $validated['total_target'];
+            $proposal->save();
+    
+            return back()
+                ->with('success','Successfully Edit Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
     }
 }

@@ -219,8 +219,8 @@ class ManageProposal extends Controller
     public function detail($id)
     {
         $proposal = Proposal::findOrFail($id, ['title','id_user','id_company','document','total_target','total_funded']);
-        $funding = Funding::select(['id_user','fund','created_at'])->where('id_proposal', $id)->get();
-        $vote = Vote::select(['id_user','id_company','created_at','is_reject'])->where('id_proposal', $id)->get();
+        $funding = Funding::select(['id_user','fund','created_at'])->where('id_proposal', $id)->orderBy('created_at','desc')->get();
+        $vote = Vote::select(['id_user','id_company','created_at','is_reject'])->where('id_proposal', $id)->orderBy('created_at','desc')->get();
 
         $render = view('content.pages.admin.management.proposal.component.content-detail', compact('proposal','funding','vote'));
         return response()->json(['data' => $render->render()]);
