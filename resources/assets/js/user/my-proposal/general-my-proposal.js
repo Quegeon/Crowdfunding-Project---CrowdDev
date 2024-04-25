@@ -53,4 +53,18 @@ $('.btn-edit').on('click', function() {
              console.log(err);
          }
     });
- });
+});
+
+$('.btn-selection').on('click', function() {
+    $.ajax({
+         url: $(this).data('href'),
+         method: 'GET',
+         success: function(res) {
+             $('#content-selection').html(res.data)
+             $('#selectCompany').modal('show');
+         },
+         error: function(err) {
+             console.log(err);
+         }
+    });
+});

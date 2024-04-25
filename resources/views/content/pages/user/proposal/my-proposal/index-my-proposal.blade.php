@@ -7,7 +7,8 @@
     'resources/assets/vendor/libs/@form-validation/form-validation.scss',
     'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss',
     'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
-    'resources/assets/vendor/libs/bs-stepper/bs-stepper.scss'
+    'resources/assets/vendor/libs/bs-stepper/bs-stepper.scss',
+    'resources/assets/vendor/libs/select2/select2.scss'
   ])
 @endsection
 
@@ -19,7 +20,8 @@
     'resources/assets/vendor/libs/jquery/jquery.js',
     'resources/assets/vendor/libs/sweetalert2/sweetalert2.js',
     'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
-    'resources/assets/vendor/libs/bs-stepper/bs-stepper.js'
+    'resources/assets/vendor/libs/bs-stepper/bs-stepper.js',
+    'resources/assets/vendor/libs/select2/select2.js'
   ])
 @endsection
 
@@ -108,6 +110,8 @@
                         <button type="button" class="dropdown-item btn-edit" data-href="{{ route('user.proposal.my-proposal.show.edit', $p->id) }}"><i class="ti ti-pencil me-1"></i> Edit</button>
                         <button type="button" class="dropdown-item btn-delete" data-href="{{ route('user.proposal.my-proposal.destroy', $p->id) }}"><i class="ti ti-trash me-1"></i> Delete</button>
                       @endif
+                    @elseif($p->status == 'Selection')
+                      <button type="button" class="dropdown-item btn-selection" data-href="{{ route('user.proposal.my-proposal.show.selection', $p->id) }}"><i class="ti ti-briefcase me-1"></i> Select Company</button>
                     @endif
                 </div>
               </div>
@@ -123,5 +127,6 @@
 @include('content.pages.user.proposal.my-proposal.component.modal-my-detail-proposal')
 @include('content.pages.user.proposal.my-proposal.component.modal-my-fund')
 @include('content.pages.user.proposal.my-proposal.component.modal-my-edit-proposal')
+@include('content.pages.user.proposal.my-proposal.component.modal-company-select')
 
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\pages\user;
 
 use App\Http\Controllers\Controller;
+use App\Models\Company;
 use App\Models\Funding;
 use App\Models\Proposal;
 use App\Models\Selection;
@@ -258,4 +259,56 @@ class ProposalController extends Controller
                 ->withErrors($e->getMessage());
         }
     }
+
+    public function show_selection($id)
+    {
+        $proposal = Proposal::findOrFail($id, ['id','status']);
+        $rejected = Selection::where('id_proposal', $id)
+            ->where('is_rejected', true)
+            ->pluck('id_company');
+        $company = Company::select(['id','company_name','country','work_field'])
+            ->whereNotIn('id', $rejected->toArray())
+            ->get();
+        $render = view('content.pages.user.proposal.my-proposal.component.content-selection', compact('proposal','company'));
+        return response()->json(['data' => $render->render()]);
+    }
+
+    public function company_select($id)
+    {
+        $proposal = Proposal::findOrFail($id);
+
+        $validator = Validator::make($this->request->all(), ['id_company' => 'required|exists:companies,id']);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        try {
+            $proposal->update([
+                'id_company' => $validated['id_company'],
+                'status' => 'Voting'
+            ]);
+
+            $selection = new Selection([
+                'id' => Str::orderedUuid(),
+                'id_proposal' => $proposal->id,
+                'id_company' => $validated['id_company'],
+                'is_rejected' => false
+            ]);
+
+            $selection->save();
+
+            return back()
+                ->with('success', 'Successfully Select Company Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
 }
+    

@@ -128,6 +128,8 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
             Route::get('/my-proposal/show/fund/{id}/{is_view_proposal}', 'show_fund')->name('user.proposal.my-proposal.show.fund');
             Route::post('/my-proposal/fund/{id}', 'fund')->name('user.proposal.my-proposal.fund');
             Route::get('/my-proposal/detail/{id}', 'detail_mp')->name('user.proposal.my-proposal.detail');
+            Route::get('/my-proposal/show/selection/{id}', 'show_selection')->name('user.proposal.my-proposal.show.selection');
+            Route::post('/my-proposal/company-select/{id}', 'company_select')->name('user.proposal.my-proposal.company-select');
         });
 
         // Company
