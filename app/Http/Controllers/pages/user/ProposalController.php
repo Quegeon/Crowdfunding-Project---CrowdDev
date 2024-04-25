@@ -22,11 +22,76 @@ class ProposalController extends Controller
 
     public function view_proposal()
     {
+        $not_client = Proposal::where('id_user', Auth::user()->id)->pluck('id');
+
         $proposal = Proposal::select(['id','title','id_user','document','total_target','total_funded'])
             ->where('status', 'Funding')
+            ->whereNotIn('id', $not_client)
+            ->orderBy('created_at','desc')
             ->get();
-        $funding = Funding::where('id_user', Auth::user()->id)->get()->unique('id_proposal');
+        $funding = Funding::where('id_user', Auth::user()->id)
+            ->whereNotIn('id_proposal', $not_client)
+            ->orderBy('created_at','desc')
+            ->get()
+            ->unique('id_proposal');
+        // $vote = Proposal::select(['id','document'])
+        //     ->where('status', 'Voting')
+        //     ->whereNotIn('id', $not_client)
+        //     ->orderBy('created_at','desc')
+        //     ->get();
+
         return view('content.pages.user.proposal.view-proposal.index-view-proposal', compact('proposal','funding'));
+    }
+
+    public function my_proposal()
+    {
+        $proposal = Proposal::select(['id','title','document','id_company','total_funded','total_target','status'])
+            ->where('id_user', Auth::user()->id)
+            ->orderBy('created_at','desc')
+            ->get();
+
+        return view('content.pages.user.proposal.my-proposal.index-my-proposal', compact('proposal'));
+    }
+
+    public function store_proposal()
+    {
+        $validator = Validator::make($this->request->all(), [
+            'title' => 'required|string|min:6|max:100',
+            'document' => 'required|file|max:10240|mimetypes:application/pdf',
+            'total_target' => 'required|numeric|digits_between:4,10'
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $validated = $validator->validated();
+        $file = $this->request->file('document');
+
+        try {
+            $ouuid = Str::orderedUuid();
+            $file->storeAs('proposal', $ouuid . '.pdf', 'local');
+
+            $proposal = new Proposal([
+                'id' => $ouuid,
+                'title' => $validated['title'],
+                'id_user' => Auth::user()->id,
+                'document' => $file->getClientOriginalName(),
+                'total_target' => $validated['total_target'],
+                'status' => 'Funding'
+            ]);
+
+            $proposal->save();
+
+            return back()
+                ->with('success','Successfully Add Data');
+
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
     }
 
     public function download($id)
@@ -88,12 +153,17 @@ class ProposalController extends Controller
         }
     }
 
-    public function detail($id)
+    public function detail_funding($id, $is_view_proposal)
     {
         $funding = Funding::select(['id','id_user','fund','created_at'])
             ->where('id_proposal', $id)
             ->get();
-        $render = view('content.pages.user.proposal.view-proposal.component.content-fund-detail', compact('funding'));
+        if ($is_view_proposal) {
+            $render = view('content.pages.user.proposal.view-proposal.component.content-fund-detail', compact('funding'));
+
+        } else {
+            $render = view('content.pages.user.proposal.view-proposal.component.content-fund-detail', compact('funding'));
+        }
         return response()->json(['data' => $render->render()]);
     }
 }

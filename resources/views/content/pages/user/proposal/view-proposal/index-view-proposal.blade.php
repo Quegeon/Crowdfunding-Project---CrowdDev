@@ -46,7 +46,7 @@
       <h5 class="card-header">Proposal</h5>
   </div>
   <div class="table-responsive text-nowrap">
-    <table class="table">
+    <table class="table datatable">
       <thead class="table-primary">
         <tr>
           <th>#</th>
@@ -90,7 +90,7 @@
       <h5 class="card-header">Your Funding</h5>
   </div>
   <div class="table-responsive text-nowrap">
-    <table class="table">
+    <table class="table datatable">
       <thead class="table-primary">
         <tr>
           <th>#</th>
@@ -137,7 +137,7 @@
               <div class="d-flex dropdown justify-content-center">
                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                 <div class="dropdown-menu">
-                  <button type="button" class="dropdown-item btn-detail" data-href="{{ route('user.proposal.view-proposal.detail', $f->id_proposal) }}"><i class="ti ti-search me-1"></i> Detail</button>
+                  <button type="button" class="dropdown-item btn-detail" data-href="{{ route('user.proposal.view-proposal.detail-funding', ['id' => $f->id_proposal, 'is_view_proposal' => true]) }}"><i class="ti ti-search me-1"></i> Detail</button>
                 </div>
               </div>
             </td>
@@ -147,6 +147,44 @@
     </table>
   </div>
 </div>
+
+{{-- <div class="card mt-5">
+  <div class="d-flex justify-content-between">
+      <h5 class="card-header">Active Vote</h5>
+  </div>
+  <div class="table-responsive text-nowrap">
+    <table class="table">
+      <thead class="table-primary">
+        <tr>
+          <th>#</th>
+          <th>Proposal</th>
+          <th class="text-center">Vote</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0">
+        @foreach ($vote as $v)
+          <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $v->Proposal->title }}</td>
+            <td class="text-center">
+              <a href="{{ route('user.proposal.view-proposal.vote.approve', $v->id) }}" class="btn btn-outline-success bg-label-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Approve"><i class="fa fa-check"></i></a>
+              <a href="{{ route('user.proposal.view-proposal.vote.reject', $v->id) }}" class="btn btn-outline-danger bg-label-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Reject"><i class="fa fa-times"></i></a>  
+            </td>
+            <td>
+              <div class="d-flex dropdown justify-content-center">
+                <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
+                <div class="dropdown-menu">
+                  <button type="button" class="dropdown-item btn-detail" data-href="{{ route('user.proposal.view-proposal.vote.detail', $v->id) }}"><i class="ti ti-search me-1"></i> Detail</button>
+                </div>
+              </div>
+            </td>
+          </tr>
+        @endforeach
+      </tbody>
+    </table>
+  </div>
+</div> --}}
 
 @include('content.pages.user.proposal.view-proposal.component.modal-user-fund')
 @include('content.pages.user.proposal.view-proposal.component.modal-user-fund-detail')

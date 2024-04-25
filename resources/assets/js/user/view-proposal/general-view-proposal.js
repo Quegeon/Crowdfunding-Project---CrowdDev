@@ -1,4 +1,4 @@
-$('.table').DataTable({});
+$('.datatable').DataTable({});
 
 $('.btn-fund').on('click', function() {
     $.ajax({
