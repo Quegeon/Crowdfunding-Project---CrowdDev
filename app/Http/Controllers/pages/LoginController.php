@@ -21,6 +21,7 @@ class LoginController extends Controller
 
     public function index()
     {
+        // dd(Auth::guard('web')->check());
         $pageConfigs = ['myLayout' => 'blank'];
         return view('content.authentications.login', ['pageConfigs' => $pageConfigs]);
     }
@@ -60,7 +61,14 @@ class LoginController extends Controller
 
     public function logout()
     {
-        Auth::logout();
+        if (Auth::guard('web')->check()) {
+            Auth::guard('web')->logout();        
+        } elseif (Auth::guard('admin')->check()) {
+            Auth::guard('admin')->logout();  
+        } else {
+            Auth::guard('company')->logout();        
+        }
+
         return redirect()
             ->route('login');
     }

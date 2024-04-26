@@ -2,6 +2,7 @@
 $containerNav = ($configData['contentLayout'] === 'compact') ? 'container-xxl' : 'container-fluid';
 $navbarDetached = ($navbarDetached ?? '');
 
+
 if (Auth::guard('web')->check()) {
   $username = Auth::user()->username;
   $level = 'Client & Sponsor';
