@@ -170,11 +170,20 @@ class ProposalController extends Controller
     public function my_proposal()
     {
         $proposal = Proposal::select(['id','title','document','id_company','total_funded','total_target','status'])
+            ->where('status', '!=', 'Ongoing')
+            ->orWhere('status', '!=', 'Confirmation')
             ->where('id_user', Auth::user()->id)
             ->orderBy('created_at','desc')
             ->get();
 
-        return view('content.pages.user.proposal.my-proposal.index-my-proposal', compact('proposal'));
+        $ongoing = Proposal::select(['id','title','document','id_company','status'])
+            ->where('status', 'Ongoing')
+            ->orWhere('status', 'Confirmation')
+            ->where('id_user', Auth::user()->id)
+            ->orderBy('created_at','desc')
+            ->get();
+
+        return view('content.pages.user.proposal.my-proposal.index-my-proposal', compact('proposal','ongoing'));
     }
 
     public function detail_mp($id)
@@ -311,6 +320,38 @@ class ProposalController extends Controller
             return back()
                 ->with('success', 'Successfully Select Company Data');
 
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
+
+    public function done($id)
+    {
+        $proposal = Proposal::findOrFail($id);
+
+        try {
+            $proposal->update(['status' => 'Done']);
+
+            return back()
+                ->with('success', 'Successfully Confirm Done Proposal');
+            
+        } catch (\Exception $e) {
+            return back()
+                ->withErrors($e->getMessage());
+        }
+    }
+
+    public function resend($id)
+    {
+        $proposal = Proposal::findOrFail($id);
+
+        try {
+            $proposal->update(['status' => 'Ongoing']);
+
+            return back()
+                ->with('success', 'Successfully Resend Proposal');
+            
         } catch (\Exception $e) {
             return back()
                 ->withErrors($e->getMessage());

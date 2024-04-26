@@ -132,6 +132,8 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
             Route::get('/my-proposal/detail/{id}', 'detail_mp')->name('user.proposal.my-proposal.detail');
             Route::get('/my-proposal/show/selection/{id}', 'show_selection')->name('user.proposal.my-proposal.show.selection');
             Route::post('/my-proposal/company-select/{id}', 'company_select')->name('user.proposal.my-proposal.company-select');
+            Route::get('/my-proposal/done/{id}', 'done')->name('user.proposal.my-proposal.confirm.done');
+            Route::get('/my-proposal/resend/{id}', 'resend')->name('user.proposal.my-proposal.confirm.resend');
         });
 
         // Company
@@ -149,23 +151,18 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
 Route::get('/dashboard-company', [DashboardCompany::class, 'index'])->name('dashboard.company');
 
     Route::prefix('company')->group(function(){
-        // Submission
         Route::prefix('submission')->controller(C_Submission::class)->group(function(){
-            Route::prefix('approval')->group(function(){
-
-            });
-
-            Route::prefix('history')->group(function(){
-
-            });
+            Route::get('/approval', 'approval')->name('company.submission.approval');
+            Route::get('/approval/download/{id}', 'download')->name('company.submission.approval.download');
+            Route::get('/approval/approve/{id}', 'approve')->name('company.submission.approval.approve');
+            Route::get('/approval/reject/{id}', 'reject')->name('company.submission.approval.reject');
+            Route::get('/approval/confirmation/{id}', 'confirmation')->name('company.submission.confirmation');
         });
 
-        // Profile
-        Route::prefix('profile')->controller(C_Profile::class)->group(function(){
-
+        Route::prefix('history')->controller(C_Profile::class)->group(function(){
+            
         });
     });
-
 // locale
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 

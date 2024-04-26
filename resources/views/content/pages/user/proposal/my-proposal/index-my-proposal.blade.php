@@ -88,12 +88,6 @@
                     @case('Approval')
                         <span class="badge bg-label-warning text-center">Approval</span>
                         @break
-                    @case('Ongoing')
-                        <span class="badge bg-label-success text-center">Ongoing</span>
-                        @break
-                    @case('Confirmation')
-                        <span class="badge bg-label-warning text-center">Confirmation</span>
-                        @break
                     @case('Done')
                         <span class="badge bg-label-secondary text-center">Done</span>
                         @break
@@ -122,6 +116,53 @@
     </table>
   </div>
 </div>
+
+<div class="card mt-5">
+  <div class="d-flex justify-content-between">
+      <h5 class="card-header">Ongoing</h5>
+  </div>
+  <div class="table-responsive text-nowrap">
+      <table class="table">
+          <thead class="table-primary">
+              <tr>
+                  <th>#</th>
+                  <th>Title</th>
+                  <th>Document</th>
+                  <th>Company</th>
+                  <th class="text-center">Status</th>
+                  <th class="text-center">Confirmation</th>
+              </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+              @foreach ($ongoing as $o)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $o->title }}</td>
+                    <td>{{ $o->document }}</td>
+                    <td>{{ $o->Company->company_name }}</td>
+                    <td class="text-center">
+                      @switch($o->status)
+                        @case('Ongoing')
+                          <span class="badge bg-label-success text-center">Ongoing</span>
+                          @break
+                        @case('Confirmation')
+                          <span class="badge bg-label-warning text-center">Confirmation</span>
+                          @break
+                      @endswitch
+                    </td>
+                    <td class="text-center">
+                      @if ($o->status == 'Confirmation')
+                        <a href="{{ route('user.proposal.my-proposal.confirm.done', $o->id) }}" class="btn btn-outline-success bg-label-success" data-bs-toggle="tooltip" data-bs-placement="top" title="Confirm Done"><i class="fa fa-check"></i></a>
+                        <a href="{{ route('user.proposal.my-proposal.confirm.resend', $o->id) }}" class="btn btn-outline-danger bg-label-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Resend Proposal"><i class="fa fa-times"></i></a>
+                      @endif
+                    </td>
+                </tr>
+              @endforeach
+          </tbody>
+      </table>
+  </div>
+</div>
+
 
 @include('content.pages.user.proposal.my-proposal.component.modal-my-add-proposal')
 @include('content.pages.user.proposal.my-proposal.component.modal-my-detail-proposal')
