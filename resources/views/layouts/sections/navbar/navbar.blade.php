@@ -12,7 +12,7 @@ if (Auth::guard('web')->check()) {
 
 } else {
   $username = Auth::guard('company')->user()->username;
-  $level - 'Company';
+  $level = 'Company';
 }
 @endphp
 

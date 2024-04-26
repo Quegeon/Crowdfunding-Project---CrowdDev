@@ -88,7 +88,7 @@ $configData = Helper::appClasses();
           </li>
         @endforeach
       @else
-        @foreach ($menuData[1]->menu as $menu)
+        @foreach ($menuData[1]->menu_company as $menu)
           @php
             $activeClass = null;
             $currentRouteName =  Route::currentRouteName();

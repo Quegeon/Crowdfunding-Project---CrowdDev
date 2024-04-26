@@ -22,6 +22,11 @@ use App\Http\Controllers\pages\user\DashboardController as DashboardUser;
 use App\Http\Controllers\pages\user\ProposalController as U_Proposal;
 use App\Http\Controllers\pages\user\CompanyController as U_Company;
 
+// Company
+use App\Http\Controllers\pages\company\DashboardController as DashboardCompany;
+use App\Http\Controllers\pages\company\SubmissionController as C_Submission;
+use App\Http\Controllers\pages\company\ProfileController as C_Profile;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -140,6 +145,26 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
         });
     });
 
+// Company
+Route::get('/dashboard-company', [DashboardCompany::class, 'index'])->name('dashboard.company');
+
+    Route::prefix('company')->group(function(){
+        // Submission
+        Route::prefix('submission')->controller(C_Submission::class)->group(function(){
+            Route::prefix('approval')->group(function(){
+
+            });
+
+            Route::prefix('history')->group(function(){
+
+            });
+        });
+
+        // Profile
+        Route::prefix('profile')->controller(C_Profile::class)->group(function(){
+
+        });
+    });
 
 // locale
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);

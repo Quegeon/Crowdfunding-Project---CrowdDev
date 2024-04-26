@@ -49,7 +49,8 @@ class LoginController extends Controller
                 ->route('dashboard.admin');
 
         } elseif (Auth::guard('company')->attempt(['company_email' => $validated['email'], 'password' => $validated['password']])) {
-            dd('company');
+            return redirect()
+                ->route('dashboard.company');
 
         } else {
             return back()

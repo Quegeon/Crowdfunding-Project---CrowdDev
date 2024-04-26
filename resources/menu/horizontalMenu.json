@@ -80,5 +80,30 @@
         }
       ]
     }
+  ],
+  "menu_company": [
+    {
+      "url": "/dashboard-company",
+      "name": "Dashboard Company",
+      "icon": "menu-icon tf-icons ti ti-smart-home",
+      "slug": "dashboard.company"
+    },
+    {
+      "name": "Submission",
+      "icon": "menu-icon tf-icons ti ti-files",
+      "slug": "company.submission",
+      "submenu": [
+        {
+          "url": "/company/submission/approval",
+          "name": "Approval",
+          "slug": "company.submission.approval"
+        },
+        {
+          "url": "/user/proposal/my-proposal",
+          "name": "History",
+          "slug": "company.submission.history"
+        }
+      ]
+    }
   ]
 }
