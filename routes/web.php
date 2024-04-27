@@ -162,6 +162,12 @@ Route::get('/dashboard-company', [DashboardCompany::class, 'index'])->name('dash
         Route::prefix('history')->controller(C_Profile::class)->group(function(){
             
         });
+
+        Route::prefix('profile')->controller(C_Profile::class)->group(function(){
+            Route::get('/', 'index')->name('company.profile');
+            Route::get('/show', 'show')->name('company.profile.show');
+            Route::put('/update', 'update')->name('company.profile.update');
+        });
     });
 // locale
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);

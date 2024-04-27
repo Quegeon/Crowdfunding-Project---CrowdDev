@@ -1,4 +1,4 @@
-<div id="edit-company-wizard" class="bs-stepper vertical wizard-modern mt-2">
+<div id="edit-profile-wizard" class="bs-stepper vertical wizard-modern mt-2">
     <div class="bs-stepper-header">
       <div class="step" data-target="#account-details">
         <button type="button" class="step-trigger">
@@ -33,20 +33,20 @@
       </div>
     </div>
     <div class="bs-stepper-content">
-      <form action="{{ route('management.company.update', $company->id) }}" method="POST" id="editCompanyForm" onSubmit="return false" autocomplete="off">
+      <form action="{{ route('company.profile.update') }}" method="POST" id="editProfileForm" onSubmit="return false" autocomplete="off">
         @csrf
         @method('PUT')
         <div id="account-details" class="content">
           <div class="row g-3">
             <div class="col-sm-6">
               <label class="form-label">Username</label>
-              <input type="text" name="username" class="form-control" placeholder="{{ $company->username }}" value="{{ $company->username }}" />
+              <input type="text" name="username" class="form-control" placeholder="{{ Auth::guard('company')->user()->username }}" value="{{ Auth::guard('company')->user()->username }}" />
             </div>
             <div class="col-sm-6">
               <label class="form-label">Company Email</label>
               <div class="input-group">
                 <span class="input-group-text" id="basic-addon11">@</span>
-                <input type="text" id="company_email" name="company_email" class="form-control" placeholder="{{ $company->company_email }}" value="{{ $company->company_email }}" aria-describedby="basic-addon11" />
+                <input type="text" id="company_email" name="company_email" class="form-control" placeholder="{{ Auth::guard('company')->user()->company_email }}" value="{{ Auth::guard('company')->user()->company_email }}" aria-describedby="basic-addon11" />
               </div>
             </div>
             <div class="col-12 d-flex justify-content-end">
@@ -58,21 +58,21 @@
           <div class="row g-3">
             <div class="col-sm-6">
               <label class="form-label">Company Name</label>
-              <input type="text" name="company_name" class="form-control" placeholder="{{ $company->company_name }}" value="{{ $company->company_name }}" />
+              <input type="text" name="company_name" class="form-control" placeholder="{{ Auth::guard('company')->user()->company_name }}" value="{{ Auth::guard('company')->user()->company_name }}" />
             </div>
             <div class="col-sm-6">
               <label class="form-label">Work Fields</label>
-              <input type="text" name="work_field" class="form-control" placeholder="{{ $company->work_field }}" value="{{ $company->work_field }}" />
+              <input type="text" name="work_field" class="form-control" placeholder="{{ Auth::guard('company')->user()->work_field }}" value="{{ Auth::guard('company')->user()->work_field }}" />
             </div>
             <div class="col-sm-6">
               <label class="form-label">Country</label>
               <select name="country" class="country-data">
-                <option value="{{ $company->country }}" selected>Default: {{ $company->country }}</option>
+                <option value="{{ Auth::guard('company')->user()->country }}" selected>Default: {{ Auth::guard('company')->user()->country }}</option>
               </select>
             </div>
             <div class="col-sm-12">
               <label class="form-label">Company Description</label>
-              <textarea name="company_description" class="form-control" rows="5" maxlength="255" placeholder="{{ $company->company_description }}">{{ $company->company_description }}</textarea>
+              <textarea name="company_description" class="form-control" rows="5" maxlength="255" placeholder="{{ Auth::guard('company')->user()->company_description }}">{{ Auth::guard('company')->user()->company_description }}</textarea>
             </div>
             <div class="col-12 d-flex justify-content-between">
               <button class="btn btn-label-secondary btn-prev"> <i class="ti ti-arrow-left me-sm-1"></i>
@@ -86,17 +86,17 @@
           <div class="row g-3">
             <div class="col-sm-6">
               <label class="form-label">Name</label>
-              <input type="text" name="name" class="form-control" placeholder="{{ $company->name }}" value="{{ $company->name }}" />
+              <input type="text" name="name" class="form-control" placeholder="{{ Auth::guard('company')->user()->name }}" value="{{ Auth::guard('company')->user()->name }}" />
             </div>
             <div class="col-sm-6">
               <label class="form-label">Position</label>
-              <input type="text" name="position" class="form-control" placeholder="{{ $company->position }}" value="{{ $company->position }}" />
+              <input type="text" name="position" class="form-control" placeholder="{{ Auth::guard('company')->user()->position }}" value="{{ Auth::guard('company')->user()->position }}" />
             </div>
             <div class="col-sm-6">
               <label class="form-label">Personal Email</label>
               <div class="input-group">
                 <span class="input-group-text" id="basic-addon11">@</span>
-                <input type="text" name="personal_email" class="form-control" placeholder="{{ $company->personal_email }}" value="{{ $company->personal_email }}" aria-describedby="basic-addon11" />
+                <input type="text" name="personal_email" class="form-control" placeholder="{{ Auth::guard('company')->user()->personal_email }}" value="{{ Auth::guard('company')->user()->personal_email }}" aria-describedby="basic-addon11" />
               </div>
             </div>
             <div class="col-12 d-flex justify-content-between">
@@ -113,10 +113,10 @@
 
 <script>
     $(document).ready(function() {
-        const wizardIconsModernVertical = document.querySelector('#edit-company-wizard');
+        const wizardIconsModernVertical = document.querySelector('#edit-profile-wizard');
   
         if (typeof wizardIconsModernVertical !== undefined && wizardIconsModernVertical !== null) {
-            const wizardValidationForm = wizardIconsModernVertical.querySelector('#editCompanyForm');
+            const wizardValidationForm = wizardIconsModernVertical.querySelector('#editProfileForm');
 
             const wizardValidationFormStep1 = wizardValidationForm.querySelector('#account-details');
             const wizardValidationFormStep2 = wizardValidationForm.querySelector('#company-details');

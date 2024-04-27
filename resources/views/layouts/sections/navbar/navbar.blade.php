@@ -85,7 +85,7 @@ if (Auth::guard('web')->check()) {
               </li>
               @if ($level == 'Company')
                 <li>
-                  <a class="dropdown-item" href="#">
+                  <a class="dropdown-item" href="{{ route('company.profile') }}">
                     <i class="ti ti-user-check me-2 ti-sm"></i>
                     <span class="align-middle">Company Profile</span>
                   </a>
