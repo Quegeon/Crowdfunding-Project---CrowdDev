@@ -48,8 +48,9 @@ Route::get('/register-company', [Login::class, 'register_company'])->name('regis
 Route::post('/postregister-company', [Login::class, 'postregister_company'])->name('register.company.post');
 
 // Admin
-Route::get('/dashboard-admin', [DashboardAdmin::class, 'index'])->name('dashboard.admin');
-
+Route::group(['middleware' => ['auth:admin']], function(){
+    Route::get('/dashboard-admin', [DashboardAdmin::class, 'index'])->name('dashboard.admin');
+    
     // Management
     Route::prefix('management')->group(function(){
         // M_Admin
@@ -109,10 +110,12 @@ Route::get('/dashboard-admin', [DashboardAdmin::class, 'index'])->name('dashboar
             Route::get('/download/{id}', 'download')->name('management.funding.download');
         });
     });
+});
 
 // User
-Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.user');
-
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.user');
+    
     Route::prefix('user')->group(function(){
         // Proposal
         Route::prefix('proposal')->controller(U_Proposal::class)->group(function(){
@@ -135,21 +138,23 @@ Route::get('/dashboard-user', [DashboardUser::class, 'index'])->name('dashboard.
             Route::get('/my-proposal/done/{id}', 'done')->name('user.proposal.my-proposal.confirm.done');
             Route::get('/my-proposal/resend/{id}', 'resend')->name('user.proposal.my-proposal.confirm.resend');
         });
-
+    
         // Company
         Route::prefix('company')->controller(U_Company::class)->group(function(){
             Route::get('/view-company', 'view_company')->name('user.company.view-company');
             Route::get('/view-company/detail/{id}', 'detail_company')->name('user.company.view-company.detail');
-
+    
             Route::get('/selection', 'company_selection')->name('user.company.selection');
             Route::get('/selection/vote/approve/{id}', 'approve')->name('user.company.selection.vote.approve');
             Route::get('/selection/vote/reject/{id}', 'reject')->name('user.company.selection.vote.reject');
         });
     });
+});
 
 // Company
-Route::get('/dashboard-company', [DashboardCompany::class, 'index'])->name('dashboard.company');
-
+Route::group(['middleware' => ['auth:company']], function(){
+    Route::get('/dashboard-company', [DashboardCompany::class, 'index'])->name('dashboard.company');
+    
     Route::prefix('company')->group(function(){
         Route::prefix('submission')->controller(C_Submission::class)->group(function(){
             Route::get('/approval', 'approval')->name('company.submission.approval');
@@ -157,16 +162,18 @@ Route::get('/dashboard-company', [DashboardCompany::class, 'index'])->name('dash
             Route::get('/approval/approve/{id}', 'approve')->name('company.submission.approval.approve');
             Route::get('/approval/reject/{id}', 'reject')->name('company.submission.approval.reject');
             Route::get('/approval/confirmation/{id}', 'confirmation')->name('company.submission.confirmation');
-
+    
             Route::get('/history', 'history')->name('company.submission.history');
         });
-
+    
         Route::prefix('profile')->controller(C_Profile::class)->group(function(){
             Route::get('/', 'index')->name('company.profile');
             Route::get('/show', 'show')->name('company.profile.show');
             Route::put('/update', 'update')->name('company.profile.update');
         });
     });
+});
+
 // locale
 Route::get('lang/{locale}', [LanguageController::class, 'swap']);
 
