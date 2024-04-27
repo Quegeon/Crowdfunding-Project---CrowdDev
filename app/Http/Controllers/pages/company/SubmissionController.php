@@ -21,8 +21,7 @@ class SubmissionController extends Controller
             ->get();
 
         $ongoing = Proposal::select(['id','title','id_user','document','status'])
-            ->where('status', 'Ongoing')
-            ->orWhere('status', 'Confirmation')
+            ->whereIn('status', ['Ongoing','Confirmation'])
             ->where('id_company', Auth::guard('company')->user()->id)
             ->orderByDesc('created_at')
             ->get();
@@ -93,6 +92,11 @@ class SubmissionController extends Controller
 
     public function history()
     {
-        return view('content.pages.company.submission.history.index-history');
+        $history = Selection::select(['id_company'])
+            ->where('id_company', Auth::guard('company')->user()->id)
+            ->where('is_rejected', true)
+            ->get();
+
+        return view('content.pages.company.submission.history.index-history', compact('history'));
     }
 }

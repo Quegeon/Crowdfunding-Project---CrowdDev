@@ -170,15 +170,13 @@ class ProposalController extends Controller
     public function my_proposal()
     {
         $proposal = Proposal::select(['id','title','document','id_company','total_funded','total_target','status'])
-            ->where('status', '!=', 'Ongoing')
-            ->orWhere('status', '!=', 'Confirmation')
+            ->whereNotIn('status', ['Ongoing','Confirmation'])
             ->where('id_user', Auth::user()->id)
             ->orderBy('created_at','desc')
             ->get();
 
         $ongoing = Proposal::select(['id','title','document','id_company','status'])
-            ->where('status', 'Ongoing')
-            ->orWhere('status', 'Confirmation')
+            ->whereIn('status', ['Ongoing','Confirmation'])
             ->where('id_user', Auth::user()->id)
             ->orderBy('created_at','desc')
             ->get();

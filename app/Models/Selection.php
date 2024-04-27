@@ -13,4 +13,9 @@ class Selection extends Model
     protected $fillable = ['id','id_proposal','id_company','is_rejected'];
     protected $keyType = 'string';
     public $incrementing = false;
+
+    public function Company()
+    {
+        return $this->belongsTo(Company::class, 'id_company', 'id');
+    }
 }

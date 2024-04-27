@@ -28,8 +28,7 @@ class ProfileController extends Controller
         $finished = Proposal::where('id_company', Auth::guard('company')->user()->id)
             ->where('status', 'Done')
             ->get();
-        $ongoing = Proposal::where('status', 'Ongoing')
-            ->orWhere('status', 'Confirmation')
+        $ongoing = Proposal::whereIn('status', ['Ongoing','Confirmation'])
             ->where('id_company', Auth::guard('company')->user()->id)
             ->get();
 

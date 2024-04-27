@@ -99,7 +99,7 @@
           "slug": "company.submission.approval"
         },
         {
-          "url": "/user/proposal/my-proposal",
+          "url": "/company/submission/history",
           "name": "History",
           "slug": "company.submission.history"
         }

@@ -6,6 +6,7 @@
     @vite([
         'resources/assets/vendor/libs/@form-validation/form-validation.scss',
         'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss',
+        'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
     ])
 @endsection
 
@@ -16,10 +17,14 @@
         'resources/assets/vendor/libs/@form-validation/auto-focus.js',
         'resources/assets/vendor/libs/jquery/jquery.js',
         'resources/assets/vendor/libs/sweetalert2/sweetalert2.js',
+        'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
     ])
 @endsection
 
 @section('page-script')
+    @vite([
+        'resources/assets/js/company/history/general-history.js'
+    ])
 @endsection
 
 @section('content')
@@ -48,17 +53,19 @@
                         <th>Title</th>
                         <th>Client</th>
                         <th>Document</th>
-                        <th>Total Target</th>
+                        <th class="text-center">Approval</th>
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @foreach ($done as $d)
+                    @foreach ($history as $h)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $d->title }}</td>
-                        <td>{{ $d->User->username }}</td>
-                        <td>{{ $d->document }}</td>
-                        <td>Rp. {{ number_format($d->total_target,2,',','.') }}</td>
+                        <td>{{ $h->Company->title }}</td>
+                        <td>{{ $h->Company->User->username }}</td>
+                        <td>{{ $h->Company->document }}</td>
+                        <td class="text-center">
+                            <span class="badge bg-label-danger text-center">Rejected</span>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

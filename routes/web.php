@@ -157,10 +157,8 @@ Route::get('/dashboard-company', [DashboardCompany::class, 'index'])->name('dash
             Route::get('/approval/approve/{id}', 'approve')->name('company.submission.approval.approve');
             Route::get('/approval/reject/{id}', 'reject')->name('company.submission.approval.reject');
             Route::get('/approval/confirmation/{id}', 'confirmation')->name('company.submission.confirmation');
-        });
 
-        Route::prefix('history')->controller(C_Profile::class)->group(function(){
-            
+            Route::get('/history', 'history')->name('company.submission.history');
         });
 
         Route::prefix('profile')->controller(C_Profile::class)->group(function(){

@@ -6,6 +6,7 @@
     @vite([
         'resources/assets/vendor/libs/@form-validation/form-validation.scss',
         'resources/assets/vendor/libs/sweetalert2/sweetalert2.scss',
+        'resources/assets/vendor/libs/datatables-bs5/datatables.bootstrap5.scss',
     ])
 @endsection
 
@@ -16,10 +17,14 @@
         'resources/assets/vendor/libs/@form-validation/auto-focus.js',
         'resources/assets/vendor/libs/jquery/jquery.js',
         'resources/assets/vendor/libs/sweetalert2/sweetalert2.js',
+        'resources/assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js',
     ])
 @endsection
 
 @section('page-script')
+    @vite([
+        'resources/assets/js/company/approval/general-approval.js'
+    ])
 @endsection
 
 @section('content')
@@ -68,7 +73,7 @@
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="ti ti-dots-vertical"></i></button>
                             <div class="dropdown-menu">
                                 <a href="{{ route('company.submission.approval.download', $p->id) }}" class="dropdown-item"><i class="ti ti-download me-1"></i> Download</a>
-                            </div>x
+                            </div>
                         </div>
                         </td>
                     </tr>

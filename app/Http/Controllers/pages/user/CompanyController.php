@@ -25,8 +25,7 @@ class CompanyController extends Controller
         $finished = Proposal::where('id_company', $company->id)
             ->where('status', 'Done')
             ->count();
-        $ongoing = Proposal::where('status', 'Ongoing')
-            ->orWhere('status', 'Confirmation')
+        $ongoing = Proposal::whereIn('status', ['Ongoing','Confirmation'])
             ->where('id_company', $company->id)
             ->count();
         $render = view('content.pages.user.company.view-company.component.content-detail', compact('company','finished','ongoing'));
